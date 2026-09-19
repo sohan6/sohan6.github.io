@@ -37,11 +37,18 @@ back to metadata-only search.
 Optionally (--summarize), each item's OCR text derivative (the *_djvu.txt
 file archive.org already generates — see e.g.
 https://archive.org/stream/{identifier}/{file}_djvu.txt) is fetched, the
-passage around the Sausmond mention is extracted, and Claude turns it into
-a plain-English 2-4 line summary. This requires `pip install anthropic`
-and an ANTHROPIC_API_KEY environment variable — see --summarize --help
-below. Previously generated summaries are reused on re-run (keyed on the
-underlying snippet) so refreshing doesn't re-pay for unchanged documents.
+passage around the Sausmond mention is extracted, and an AI model turns it
+into a plain-English 2-4 line summary. Works with either provider,
+auto-detected from whichever API key is set in the environment (Anthropic
+is tried first if both are set):
+  - Anthropic: `pip install anthropic`, set ANTHROPIC_API_KEY (or `ant auth
+    login`). Default model: claude-opus-5.
+  - OpenAI:    `pip install openai`, set OPENAI_API_KEY. Default model:
+    gpt-4o-mini.
+Pass --summary-provider to force one explicitly, and --summary-model to
+override the default model. Previously generated summaries are reused on
+re-run (keyed on the underlying snippet + model) so refreshing doesn't
+re-pay for unchanged documents.
 
 Usage:
     python tools/sausmond_catalog.py
@@ -49,6 +56,7 @@ Usage:
     python tools/sausmond_catalog.py --no-fulltext
     python tools/sausmond_catalog.py --output assets/sausmond/catalog.json
     python tools/sausmond_catalog.py --summarize
+    python tools/sausmond_catalog.py --summarize --summary-provider openai
 
 Re-run any time to pick up newly digitized documents — the Karnataka
 State Archives collection on archive.org is actively growing.
@@ -58,6 +66,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import urllib.error
 import urllib.parse
@@ -240,24 +249,84 @@ SUMMARY_SYSTEM_PROMPT = (
 )
 
 
-def summarize_with_ai(client, model: str, title: str, context: str) -> str | None:
-    import anthropic  # noqa: F401  (imported here so --summarize stays optional)
+DEFAULT_SUMMARY_MODEL = {
+    "anthropic": "claude-opus-5",
+    "openai": "gpt-4o-mini",
+}
 
+
+def detect_provider() -> str | None:
+    """Auto-picks a provider from whichever API key is set in the
+    environment. Anthropic wins if both are set; pass --summary-provider
+    to force one explicitly."""
+    if os.environ.get("ANTHROPIC_API_KEY"):
+        return "anthropic"
+    if os.environ.get("OPENAI_API_KEY"):
+        return "openai"
+    return None
+
+
+def build_ai_client(provider: str):
+    if provider == "anthropic":
+        import anthropic
+        try:
+            return anthropic.Anthropic()  # resolves ANTHROPIC_API_KEY / `ant auth login` profile
+        except anthropic.AnthropicError as e:
+            raise RuntimeError(
+                f"could not set up the Anthropic client: {e}\n"
+                f"Set the ANTHROPIC_API_KEY environment variable, or run `ant auth login`."
+            ) from e
+    elif provider == "openai":
+        import openai
+        try:
+            return openai.OpenAI()  # resolves OPENAI_API_KEY from the environment
+        except openai.OpenAIError as e:
+            raise RuntimeError(
+                f"could not set up the OpenAI client: {e}\n"
+                f"Set the OPENAI_API_KEY environment variable."
+            ) from e
+    else:
+        raise ValueError(f"unknown summary provider: {provider!r}")
+
+
+def summarize_with_ai(provider: str, client, model: str, title: str, context: str) -> str | None:
     user_content = f'Document title: "{title}"\n\nOCR excerpt:\n"""\n{context}\n"""'
-    try:
-        response = client.messages.create(
-            model=model,
-            max_tokens=400,
-            system=SUMMARY_SYSTEM_PROMPT,
-            output_config={"effort": "low"},
-            messages=[{"role": "user", "content": user_content}],
-        )
-    except anthropic.APIError as e:
-        print(f"  [ai] summarization failed for {title!r}: {e}")
-        return None
 
-    text = "".join(b.text for b in response.content if b.type == "text").strip()
-    return text or None
+    if provider == "anthropic":
+        import anthropic  # noqa: F401  (imported here so --summarize stays optional)
+        try:
+            response = client.messages.create(
+                model=model,
+                max_tokens=400,
+                system=SUMMARY_SYSTEM_PROMPT,
+                output_config={"effort": "low"},
+                messages=[{"role": "user", "content": user_content}],
+            )
+        except anthropic.APIError as e:
+            print(f"  [ai] summarization failed for {title!r}: {e}")
+            return None
+        text = "".join(b.text for b in response.content if b.type == "text").strip()
+        return text or None
+
+    elif provider == "openai":
+        import openai  # noqa: F401  (imported here so --summarize stays optional)
+        try:
+            response = client.chat.completions.create(
+                model=model,
+                max_tokens=400,
+                messages=[
+                    {"role": "system", "content": SUMMARY_SYSTEM_PROMPT},
+                    {"role": "user", "content": user_content},
+                ],
+            )
+        except openai.APIError as e:
+            print(f"  [ai] summarization failed for {title!r}: {e}")
+            return None
+        text = (response.choices[0].message.content or "").strip()
+        return text or None
+
+    else:
+        raise ValueError(f"unknown summary provider: {provider!r}")
 
 
 def collect_fulltext_hits(terms: list[str], creator: str) -> dict:
@@ -298,19 +367,13 @@ def collect_fulltext_hits(terms: list[str], creator: str) -> dict:
 
 def build_catalog(
     terms: list[str], creator: str, rows: int, with_metadata: bool, use_fulltext: bool,
-    summarize: bool = False, summary_model: str = "claude-opus-5", prev_items: dict | None = None,
+    summarize: bool = False, provider: str | None = None, summary_model: str | None = None,
+    prev_items: dict | None = None,
 ) -> dict:
     ai_client = None
     ai_new, ai_reused = 0, 0
     if summarize:
-        import anthropic
-        try:
-            ai_client = anthropic.Anthropic()  # resolves ANTHROPIC_API_KEY / `ant auth login` profile
-        except anthropic.AnthropicError as e:
-            raise RuntimeError(
-                f"could not set up the Anthropic client: {e}\n"
-                f"Set the ANTHROPIC_API_KEY environment variable, or run `ant auth login`."
-            ) from e
+        ai_client = build_ai_client(provider)
     fulltext_hits = collect_fulltext_hits(terms, creator) if use_fulltext else {}
     fulltext_list = sorted(fulltext_hits.values(), key=lambda h: h["_score"], reverse=True)
     fulltext_ids = {h["identifier"] for h in fulltext_list}
@@ -355,7 +418,8 @@ def build_catalog(
         ai_summary = None
         if summarize:
             prev = (prev_items or {}).get(identifier)
-            if prev and prev.get("ai_summary") and prev.get("description") == snippet:
+            if (prev and prev.get("ai_summary") and prev.get("description") == snippet
+                    and prev.get("ai_model") == summary_model):
                 ai_summary = prev["ai_summary"]
                 ai_reused += 1
             else:
@@ -366,7 +430,7 @@ def build_catalog(
                     if full_text:
                         context = extract_context(full_text, terms)
                 if context:
-                    ai_summary = summarize_with_ai(ai_client, summary_model, title, context)
+                    ai_summary = summarize_with_ai(provider, ai_client, summary_model, title, context)
                     if ai_summary:
                         ai_new += 1
                 else:
@@ -394,6 +458,8 @@ def build_catalog(
             "pdf_url": pdf_url,
             "thumbnail_url": THUMBNAIL_URL.format(identifier=identifier),
             "ai_summary": ai_summary,
+            "ai_provider": provider if ai_summary else None,
+            "ai_model": summary_model if ai_summary else None,
         })
 
     if summarize:
@@ -408,6 +474,8 @@ def build_catalog(
         "metadata_only_hits": len(md_only),
         "total_found": total,
         "ai_summarized": summarize,
+        "ai_provider": provider if summarize else None,
+        "ai_model": summary_model if summarize else None,
         "items": items,
     }
 
@@ -424,18 +492,33 @@ def main() -> None:
     parser.add_argument("--no-fulltext", action="store_true",
                          help="skip the full-text search backend, use metadata search only")
     parser.add_argument("--summarize", action="store_true",
-                         help="generate a 2-4 line AI summary per document from its OCR text "
-                              "(requires `pip install anthropic` and an ANTHROPIC_API_KEY env "
-                              "var, or `ant auth login`); re-runs reuse unchanged summaries")
-    parser.add_argument("--summary-model", default="claude-opus-5",
-                         help="model to use for --summarize (default: claude-opus-5)")
+                         help="generate a 2-4 line AI summary per document from its OCR text. "
+                              "Auto-detects the provider from whichever API key is set "
+                              "(ANTHROPIC_API_KEY or OPENAI_API_KEY); re-runs reuse unchanged "
+                              "summaries")
+    parser.add_argument("--summary-provider", choices=["anthropic", "openai"], default=None,
+                         help="force a specific provider for --summarize instead of "
+                              "auto-detecting from which API key is set")
+    parser.add_argument("--summary-model", default=None,
+                         help="model to use for --summarize (default depends on provider: "
+                              "claude-opus-5 for anthropic, gpt-4o-mini for openai)")
     args = parser.parse_args()
 
+    provider = None
+    summary_model = None
     if args.summarize:
+        provider = args.summary_provider or detect_provider()
+        if provider is None:
+            parser.error(
+                "--summarize needs an API key set: export ANTHROPIC_API_KEY or OPENAI_API_KEY "
+                "(or pass --summary-provider to force one and get a clearer error)"
+            )
+        package = provider  # package name matches provider name for both
         try:
-            import anthropic  # noqa: F401
+            __import__(package)
         except ImportError:
-            parser.error("--summarize requires the 'anthropic' package: pip install anthropic")
+            parser.error(f"--summarize with provider '{provider}' requires: pip install {package}")
+        summary_model = args.summary_model or DEFAULT_SUMMARY_MODEL[provider]
 
     prev_items = None
     if args.summarize and args.output.exists():
@@ -452,7 +535,8 @@ def main() -> None:
             with_metadata=not args.no_metadata,
             use_fulltext=not args.no_fulltext,
             summarize=args.summarize,
-            summary_model=args.summary_model,
+            provider=provider,
+            summary_model=summary_model,
             prev_items=prev_items,
         )
     except RuntimeError as e:
