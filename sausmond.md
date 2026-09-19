@@ -180,10 +180,10 @@ any time to pick up newly added documents:
 # or, to try a wider net of spelling variants:
 python tools/sausmond_catalog.py --terms sausmond,sausmund,sausmont,sawsmond
 # or, to add a short AI-written summary per document: set ANTHROPIC_API_KEY
-# (pip install anthropic), OPENAI_API_KEY (pip install openai), or
-# GEMINI_API_KEY (pip install google-genai) and the provider is
-# auto-detected. Re-runs reuse unchanged summaries, so this only pays for
-# documents that are new or whose match changed.
+# (pip install anthropic), OPENAI_API_KEY (pip install openai), GEMINI_API_KEY
+# (pip install google-genai), or GROQ_API_KEY (pip install groq) and the
+# provider is auto-detected. Re-runs reuse unchanged summaries, so this only
+# pays for documents that are new or whose match changed.
 python tools/sausmond_catalog.py --summarize
 python tools/sausmond_catalog.py --summarize --summary-provider gemini  # force a provider
 # on a tight free-tier request cap (RPM/RPD), batch more docs per request and

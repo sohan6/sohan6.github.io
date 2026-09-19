@@ -38,15 +38,17 @@ Optionally (--summarize), each item's OCR text derivative (the *_djvu.txt
 file archive.org already generates — see e.g.
 https://archive.org/stream/{identifier}/{file}_djvu.txt) is fetched, the
 passage around the Sausmond mention is extracted, and an AI model turns it
-into a plain-English 2-4 line summary. Works with any of three providers,
+into a plain-English 2-4 line summary. Works with any of four providers,
 auto-detected from whichever API key is set in the environment (checked in
-this order: Anthropic, OpenAI, Gemini):
+this order: Anthropic, OpenAI, Gemini, Groq):
   - Anthropic: `pip install anthropic`, set ANTHROPIC_API_KEY (or `ant auth
     login`). Default model: claude-opus-5.
   - OpenAI:    `pip install openai`, set OPENAI_API_KEY. Default model:
     gpt-4o-mini.
   - Gemini:    `pip install google-genai`, set GEMINI_API_KEY (or
     GOOGLE_API_KEY). Default model: gemini-3.6-flash.
+  - Groq:      `pip install groq`, set GROQ_API_KEY. Default model:
+    llama-3.3-70b-versatile.
 Pass --summary-provider to force one explicitly, and --summary-model to
 override the default model. Previously generated summaries are reused on
 re-run (keyed on the underlying snippet + model) so refreshing doesn't
@@ -298,6 +300,7 @@ DEFAULT_SUMMARY_MODEL = {
     "anthropic": "claude-opus-5",
     "openai": "gpt-4o-mini",
     "gemini": "gemini-3.6-flash",
+    "groq": "llama-3.3-70b-versatile",
 }
 # Provider -> (module to `import`, pip package name). Gemini's is the odd one
 # out: the import path (google.genai) differs from the pip package name
@@ -306,24 +309,29 @@ PROVIDER_MODULE = {
     "anthropic": "anthropic",
     "openai": "openai",
     "gemini": "google.genai",
+    "groq": "groq",
 }
 PROVIDER_PIP_PACKAGE = {
     "anthropic": "anthropic",
     "openai": "openai",
     "gemini": "google-genai",
+    "groq": "groq",
 }
 
 
 def detect_provider() -> str | None:
     """Auto-picks a provider from whichever API key is set in the
     environment, checked in this order: Anthropic, then OpenAI, then
-    Gemini. Pass --summary-provider to force one explicitly instead."""
+    Gemini, then Groq. Pass --summary-provider to force one explicitly
+    instead."""
     if os.environ.get("ANTHROPIC_API_KEY"):
         return "anthropic"
     if os.environ.get("OPENAI_API_KEY"):
         return "openai"
     if os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY"):
         return "gemini"
+    if os.environ.get("GROQ_API_KEY"):
+        return "groq"
     return None
 
 
@@ -354,6 +362,15 @@ def build_ai_client(provider: str):
             raise RuntimeError(
                 f"could not set up the Gemini client: {e}\n"
                 f"Set the GEMINI_API_KEY (or GOOGLE_API_KEY) environment variable."
+            ) from e
+    elif provider == "groq":
+        import groq
+        try:
+            return groq.Groq()  # resolves GROQ_API_KEY from the environment
+        except groq.GroqError as e:
+            raise RuntimeError(
+                f"could not set up the Groq client: {e}\n"
+                f"Set the GROQ_API_KEY environment variable."
             ) from e
     else:
         raise ValueError(f"unknown summary provider: {provider!r}")
@@ -420,6 +437,22 @@ def summarize_batch_with_ai(provider: str, client, model: str, batch: list[dict]
             print(f"  [ai] batch summarization failed ({len(batch)} docs): {e}")
             return {}
         text = response.text or ""
+
+    elif provider == "groq":
+        import groq  # noqa: F401  (imported here so --summarize stays optional)
+        try:
+            response = client.chat.completions.create(
+                model=model,
+                max_tokens=max_tokens,
+                messages=[
+                    {"role": "system", "content": full_system},
+                    {"role": "user", "content": user_content},
+                ],
+            )
+        except groq.APIError as e:
+            print(f"  [ai] batch summarization failed ({len(batch)} docs): {e}")
+            return {}
+        text = response.choices[0].message.content or ""
 
     else:
         raise ValueError(f"unknown summary provider: {provider!r}")
@@ -613,15 +646,15 @@ def main() -> None:
     parser.add_argument("--summarize", action="store_true",
                          help="generate a 2-4 line AI summary per document from its OCR text. "
                               "Auto-detects the provider from whichever API key is set "
-                              "(ANTHROPIC_API_KEY, OPENAI_API_KEY, or GEMINI_API_KEY / "
-                              "GOOGLE_API_KEY); re-runs reuse unchanged summaries")
-    parser.add_argument("--summary-provider", choices=["anthropic", "openai", "gemini"], default=None,
+                              "(ANTHROPIC_API_KEY, OPENAI_API_KEY, GEMINI_API_KEY / "
+                              "GOOGLE_API_KEY, or GROQ_API_KEY); re-runs reuse unchanged summaries")
+    parser.add_argument("--summary-provider", choices=["anthropic", "openai", "gemini", "groq"], default=None,
                          help="force a specific provider for --summarize instead of "
                               "auto-detecting from which API key is set")
     parser.add_argument("--summary-model", default=None,
                          help="model to use for --summarize (default depends on provider: "
                               "claude-opus-5 for anthropic, gpt-4o-mini for openai, "
-                              "gemini-3.6-flash for gemini)")
+                              "gemini-3.6-flash for gemini, llama-3.3-70b-versatile for groq)")
     parser.add_argument("--summary-batch-size", type=int, default=10,
                          help="documents summarized per API request (default: 10). Lower "
                               "this if a provider's per-request token limit is small; raise "
@@ -640,7 +673,8 @@ def main() -> None:
         if provider is None:
             parser.error(
                 "--summarize needs an API key set: export ANTHROPIC_API_KEY, OPENAI_API_KEY, "
-                "or GEMINI_API_KEY (or pass --summary-provider to force one and get a clearer error)"
+                "GEMINI_API_KEY, or GROQ_API_KEY (or pass --summary-provider to force one and "
+                "get a clearer error)"
             )
         try:
             __import__(PROVIDER_MODULE[provider])
