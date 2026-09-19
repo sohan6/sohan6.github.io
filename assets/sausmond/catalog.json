@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-19T14:12:35Z",
+  "generated_at": "2026-09-19T14:24:06Z",
   "creator_filter": "Karnataka State Archives",
   "search_terms": [
     "sausmond",
@@ -27,8 +27,8 @@
   "metadata_only_hits": 0,
   "total_found": 59,
   "ai_summarized": true,
-  "ai_provider": "gemini",
-  "ai_model": "gemini-3.6-flash",
+  "ai_provider": "groq",
+  "ai_model": "llama-3.3-70b-versatile",
   "items": [
     {
       "rank": 1,
