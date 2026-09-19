@@ -46,7 +46,7 @@ this order: Anthropic, OpenAI, Gemini):
   - OpenAI:    `pip install openai`, set OPENAI_API_KEY. Default model:
     gpt-4o-mini.
   - Gemini:    `pip install google-genai`, set GEMINI_API_KEY (or
-    GOOGLE_API_KEY). Default model: gemini-2.5-flash.
+    GOOGLE_API_KEY). Default model: gemini-3.6-flash.
 Pass --summary-provider to force one explicitly, and --summary-model to
 override the default model. Previously generated summaries are reused on
 re-run (keyed on the underlying snippet + model) so refreshing doesn't
@@ -254,7 +254,7 @@ SUMMARY_SYSTEM_PROMPT = (
 DEFAULT_SUMMARY_MODEL = {
     "anthropic": "claude-opus-5",
     "openai": "gpt-4o-mini",
-    "gemini": "gemini-2.5-flash",
+    "gemini": "gemini-3.6-flash",
 }
 # Provider -> (module to `import`, pip package name). Gemini's is the odd one
 # out: the import path (google.genai) differs from the pip package name
@@ -549,7 +549,7 @@ def main() -> None:
     parser.add_argument("--summary-model", default=None,
                          help="model to use for --summarize (default depends on provider: "
                               "claude-opus-5 for anthropic, gpt-4o-mini for openai, "
-                              "gemini-2.5-flash for gemini)")
+                              "gemini-3.6-flash for gemini)")
     args = parser.parse_args()
 
     provider = None
