@@ -185,7 +185,10 @@ python tools/sausmond_catalog.py --terms sausmond,sausmund,sausmont,sawsmond
 # auto-detected. Re-runs reuse unchanged summaries, so this only pays for
 # documents that are new or whose match changed.
 python tools/sausmond_catalog.py --summarize
-python tools/sausmond_catalog.py --summarize --summary-provider gemini  # force a provider</code></pre>
+python tools/sausmond_catalog.py --summarize --summary-provider gemini  # force a provider
+# on a tight free-tier request cap (RPM/RPD), batch more docs per request and
+# space the requests out, e.g. for a 5 RPM / 20 RPD limit on ~50 documents:
+python tools/sausmond_catalog.py --summarize --summary-batch-size 8 --summary-delay 15</code></pre>
 
 <p class="sausmond-intro">
 That overwrites <code>assets/sausmond/catalog.json</code>, which this page

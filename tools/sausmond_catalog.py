@@ -70,6 +70,7 @@ import argparse
 import json
 import os
 import re
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -241,14 +242,56 @@ def extract_context(full_text: str, terms: list[str], window: int = 700) -> str 
 SUMMARY_SYSTEM_PROMPT = (
     "You summarize short excerpts of OCR'd text from historical Karnataka "
     "State Archives documents for a catalog of records mentioning a colony "
-    "called Sausmond. Write 2-4 plain-English sentences describing what "
-    "this specific passage says about Sausmond. Base the summary only on "
-    "the text given — never invent names, dates, or events not present in "
-    "it. OCR text is often garbled (misspellings, stray characters); read "
-    "through minor noise, but if the passage is too corrupted to make "
-    "sense of, say that plainly instead of guessing. No preamble, no "
-    "markdown — plain sentences only."
+    "called Sausmond. For each excerpt, write 2-4 plain-English sentences "
+    "describing what that specific passage says about Sausmond. Base each "
+    "summary only on the text given — never invent names, dates, or events "
+    "not present in it. OCR text is often garbled (misspellings, stray "
+    "characters); read through minor noise, but if a passage is too "
+    "corrupted to make sense of, say that plainly instead of guessing."
 )
+
+BATCH_FORMAT_INSTRUCTION = (
+    "You will receive multiple excerpts in one request, each tagged with an "
+    'id. Respond with ONLY a JSON array, no other text, no markdown fences: '
+    '[{"id": "<id>", "summary": "<2-4 sentence summary>"}, ...] — exactly '
+    "one entry per excerpt given, using the exact id provided for each."
+)
+
+
+def build_batch_user_content(batch: list[dict]) -> str:
+    parts = [
+        f'Excerpt id="{item["key"]}"\n'
+        f'Document title: "{item["title"]}"\n'
+        f'OCR excerpt:\n"""\n{item["context"]}\n"""'
+        for item in batch
+    ]
+    return "\n\n---\n\n".join(parts)
+
+
+def parse_batch_response(text: str, expected_keys: set[str]) -> dict[str, str]:
+    text = text.strip()
+    if text.startswith("```"):
+        text = re.sub(r"^```[a-zA-Z]*\n?", "", text)
+        text = re.sub(r"\n?```$", "", text)
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError:
+        match = re.search(r"\[.*\]", text, re.DOTALL)
+        if not match:
+            return {}
+        try:
+            data = json.loads(match.group(0))
+        except json.JSONDecodeError:
+            return {}
+    if not isinstance(data, list):
+        return {}
+    result = {}
+    for entry in data:
+        if isinstance(entry, dict) and "id" in entry and "summary" in entry:
+            key = str(entry["id"])
+            if key in expected_keys:
+                result[key] = str(entry["summary"]).strip()
+    return result
 
 
 DEFAULT_SUMMARY_MODEL = {
@@ -316,41 +359,48 @@ def build_ai_client(provider: str):
         raise ValueError(f"unknown summary provider: {provider!r}")
 
 
-def summarize_with_ai(provider: str, client, model: str, title: str, context: str) -> str | None:
-    user_content = f'Document title: "{title}"\n\nOCR excerpt:\n"""\n{context}\n"""'
+def summarize_batch_with_ai(provider: str, client, model: str, batch: list[dict]) -> dict[str, str]:
+    """One API request summarizing every item in `batch` (each a dict with
+    'key', 'title', 'context') — cuts request count roughly by the batch
+    size, which is what free-tier request caps (RPM/RPD) actually meter,
+    as opposed to token caps. Returns {key: summary} for whatever the model
+    successfully returned; missing keys just mean no summary this round
+    (they're retried on the next --summarize run, not treated as failures)."""
+    user_content = build_batch_user_content(batch)
+    expected_keys = {item["key"] for item in batch}
+    full_system = SUMMARY_SYSTEM_PROMPT + "\n\n" + BATCH_FORMAT_INSTRUCTION
+    max_tokens = 400 * len(batch) + 200
 
     if provider == "anthropic":
         import anthropic  # noqa: F401  (imported here so --summarize stays optional)
         try:
             response = client.messages.create(
                 model=model,
-                max_tokens=400,
-                system=SUMMARY_SYSTEM_PROMPT,
+                max_tokens=max_tokens,
+                system=full_system,
                 output_config={"effort": "low"},
                 messages=[{"role": "user", "content": user_content}],
             )
         except anthropic.APIError as e:
-            print(f"  [ai] summarization failed for {title!r}: {e}")
-            return None
-        text = "".join(b.text for b in response.content if b.type == "text").strip()
-        return text or None
+            print(f"  [ai] batch summarization failed ({len(batch)} docs): {e}")
+            return {}
+        text = "".join(b.text for b in response.content if b.type == "text")
 
     elif provider == "openai":
         import openai  # noqa: F401  (imported here so --summarize stays optional)
         try:
             response = client.chat.completions.create(
                 model=model,
-                max_tokens=400,
+                max_tokens=max_tokens,
                 messages=[
-                    {"role": "system", "content": SUMMARY_SYSTEM_PROMPT},
+                    {"role": "system", "content": full_system},
                     {"role": "user", "content": user_content},
                 ],
             )
         except openai.APIError as e:
-            print(f"  [ai] summarization failed for {title!r}: {e}")
-            return None
-        text = (response.choices[0].message.content or "").strip()
-        return text or None
+            print(f"  [ai] batch summarization failed ({len(batch)} docs): {e}")
+            return {}
+        text = response.choices[0].message.content or ""
 
     elif provider == "gemini":
         from google.genai import types as genai_types
@@ -359,21 +409,22 @@ def summarize_with_ai(provider: str, client, model: str, title: str, context: st
                 model=model,
                 contents=user_content,
                 config=genai_types.GenerateContentConfig(
-                    system_instruction=SUMMARY_SYSTEM_PROMPT,
-                    max_output_tokens=400,
+                    system_instruction=full_system,
+                    max_output_tokens=max_tokens,
                 ),
             )
         except Exception as e:
             # Caught broadly: the google-genai SDK's exception hierarchy
             # isn't pinned against live docs here, so this favors skipping
-            # one item over crashing the whole batch on an unexpected type.
-            print(f"  [ai] summarization failed for {title!r}: {e}")
-            return None
-        text = (response.text or "").strip()
-        return text or None
+            # one batch over crashing the whole run on an unexpected type.
+            print(f"  [ai] batch summarization failed ({len(batch)} docs): {e}")
+            return {}
+        text = response.text or ""
 
     else:
         raise ValueError(f"unknown summary provider: {provider!r}")
+
+    return parse_batch_response(text, expected_keys)
 
 
 def collect_fulltext_hits(terms: list[str], creator: str) -> dict:
@@ -415,10 +466,11 @@ def collect_fulltext_hits(terms: list[str], creator: str) -> dict:
 def build_catalog(
     terms: list[str], creator: str, rows: int, with_metadata: bool, use_fulltext: bool,
     summarize: bool = False, provider: str | None = None, summary_model: str | None = None,
-    prev_items: dict | None = None,
+    prev_items: dict | None = None, summary_batch_size: int = 10, summary_delay: float = 0.0,
 ) -> dict:
     ai_client = None
     ai_new, ai_reused = 0, 0
+    pending_summaries: list[dict] = []  # {"index", "key", "title", "context"} awaiting a batch call
     if summarize:
         ai_client = build_ai_client(provider)
     fulltext_hits = collect_fulltext_hits(terms, creator) if use_fulltext else {}
@@ -477,9 +529,11 @@ def build_catalog(
                     if full_text:
                         context = extract_context(full_text, terms)
                 if context:
-                    ai_summary = summarize_with_ai(provider, ai_client, summary_model, title, context)
-                    if ai_summary:
-                        ai_new += 1
+                    # Deferred: queued for a batched request below rather than
+                    # called here, so N documents cost far fewer than N requests.
+                    pending_summaries.append({
+                        "index": len(items), "key": str(len(items)), "title": title, "context": context,
+                    })
                 else:
                     print(f"  [ai] no readable OCR text near a match for {title!r}; skipping summary")
 
@@ -508,6 +562,24 @@ def build_catalog(
             "ai_provider": provider if ai_summary else None,
             "ai_model": summary_model if ai_summary else None,
         })
+
+    if summarize and pending_summaries:
+        num_batches = -(-len(pending_summaries) // summary_batch_size)  # ceil div
+        print(f"  [ai] {len(pending_summaries)} summaries needed, "
+              f"{num_batches} request(s) of up to {summary_batch_size} each")
+        for batch_start in range(0, len(pending_summaries), summary_batch_size):
+            batch = pending_summaries[batch_start:batch_start + summary_batch_size]
+            results = summarize_batch_with_ai(provider, ai_client, summary_model, batch)
+            for entry in batch:
+                summary = results.get(entry["key"])
+                if summary:
+                    items[entry["index"]]["ai_summary"] = summary
+                    items[entry["index"]]["ai_provider"] = provider
+                    items[entry["index"]]["ai_model"] = summary_model
+                    ai_new += 1
+            is_last_batch = batch_start + summary_batch_size >= len(pending_summaries)
+            if summary_delay and not is_last_batch:
+                time.sleep(summary_delay)
 
     if summarize:
         print(f"  [ai] {ai_new} new summaries generated, {ai_reused} reused from the previous catalog")
@@ -550,6 +622,15 @@ def main() -> None:
                          help="model to use for --summarize (default depends on provider: "
                               "claude-opus-5 for anthropic, gpt-4o-mini for openai, "
                               "gemini-3.6-flash for gemini)")
+    parser.add_argument("--summary-batch-size", type=int, default=10,
+                         help="documents summarized per API request (default: 10). Lower "
+                              "this if a provider's per-request token limit is small; raise "
+                              "it to cut the number of requests further on a tight RPM/RPD cap")
+    parser.add_argument("--summary-delay", type=float, default=0.0,
+                         help="seconds to sleep between summary batch requests (default: 0). "
+                              "Set this if you're hitting a requests-per-minute limit, e.g. "
+                              "--summary-batch-size 8 --summary-delay 15 keeps well under a "
+                              "free-tier 5 RPM / 20 RPD cap for ~50 documents")
     args = parser.parse_args()
 
     provider = None
@@ -586,6 +667,8 @@ def main() -> None:
             provider=provider,
             summary_model=summary_model,
             prev_items=prev_items,
+            summary_batch_size=args.summary_batch_size,
+            summary_delay=args.summary_delay,
         )
     except RuntimeError as e:
         parser.error(str(e))
