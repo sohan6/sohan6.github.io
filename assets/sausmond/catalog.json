@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-19T14:24:06Z",
+  "generated_at": "2026-09-19T14:37:44Z",
   "creator_filter": "Karnataka State Archives",
   "search_terms": [
     "sausmond",
@@ -28,7 +28,7 @@
   "total_found": 59,
   "ai_summarized": true,
   "ai_provider": "groq",
-  "ai_model": "llama-3.3-70b-versatile",
+  "ai_model": "openai/gpt-oss-20b",
   "items": [
     {
       "rank": 1,
@@ -59,9 +59,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-541739/LB-B-47-2-1915-16?q=sausmand",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-541739/LB-B-47-2-1915-16.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-541739",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The reply reports that Sausmand experiences a drinking water shortage. It notes a proposed water‑supply scheme costing Rs 18 000 with an annual maintenance charge of Rs 1 140, but indicates that the scheme cannot be implemented for reasons cited in a prior letter. The reply therefore suggests that, as of February 1916, Sausmand's water supply needs remain unmet.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 2,
@@ -92,9 +92,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-RGVlcGFrOTk1NjA-RGVlcGFrMQ/1915_LBB472191516?q=sausmand",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-RGVlcGFrOTk1NjA-RGVlcGFrMQ/1915_LBB472191516.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-RGVlcGFrOTk1NjA-RGVlcGFrMQ",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The reply reports that Sausmand experiences a drinking water shortage. It notes a proposed water‑supply scheme costing Rs 18 000 with an annual maintenance charge of Rs 1 140, but indicates that the scheme cannot be implemented for reasons cited in a prior letter. The reply therefore suggests that, as of February 1916, Sausmand's water supply needs remain unmet.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 3,
@@ -125,9 +125,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-RGVlcGFrOTk3MjQ-RGVlcGFrMQ/1913_LBB42117A191314?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-RGVlcGFrOTk3MjQ-RGVlcGFrMQ/1913_LBB42117A191314.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-RGVlcGFrOTk3MjQ-RGVlcGFrMQ",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "A petition dated 30 September 1913 from the Agent of the Anglo‑Indian Association of Mysore and Coorg seeks the Bangalore Division’s Executive Engineer to help the settlers of Whitefield—including Sausmond—to design a water‑supply scheme. It also references correspondence with the Deputy Commissioner of the Bangalore Division. The petition thus records a formal request for technical assistance for Sausmond’s water infrastructure.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 4,
@@ -158,9 +158,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-541903/LB-B-42-117A-1913-14?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-541903/LB-B-42-117A-1913-14.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-541903",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "A petition dated 30 September 1913 from the Agent of the Anglo‑Indian Association of Mysore and Coorg seeks the Bangalore Division’s Executive Engineer to help the settlers of Whitefield—including Sausmond—to design a water‑supply scheme. It also references correspondence with the Deputy Commissioner of the Bangalore Division. The petition thus records a formal request for technical assistance for Sausmond’s water infrastructure.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 5,
@@ -191,9 +191,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-115850/138_PART_2_JAN_DEC_1912_9?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-115850/138_PART_2_JAN_DEC_1912_9.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-115850",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "A board resolution for a cattle pound in the Bagalur Union mentions sanctioning a trial well at Sausmond. The estimate for sinking the well is listed as Rs 22. This indicates an official plan to provide a water source for Sausmond as part of the cattle pound scheme.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 6,
@@ -224,9 +224,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-RGVlcGFrOTkzNjc-RGVlcGFrMQ/1899_LBB1767189900?q=sansmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-RGVlcGFrOTkzNjc-RGVlcGFrMQ/1899_LBB1767189900.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-RGVlcGFrOTkzNjc-RGVlcGFrMQ",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The excerpt contains a list of road works, including a Ganjur–Sausmond road. It gives the length and cost estimates for that section (e.g., 8 50? and Rs 150). This shows that a road connecting Sausmond was planned and budgeted in 1899‑1900.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 7,
@@ -257,9 +257,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-541546/LB-B-17-67-1899-00?q=sansmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-541546/LB-B-17-67-1899-00.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-541546",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The excerpt contains a list of road works, including a Ganjur–Sausmond road. It gives the length and cost estimates for that section (e.g., 8 50? and Rs 150). This shows that a road connecting Sausmond was planned and budgeted in 1899‑1900.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 8,
@@ -290,9 +290,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-RGVlcGFrMTY5ODQx-RGVlcGFrMw/133_PART_2_JAN_DEC_1911_133_PART_2_JAN_DEC_1911_223?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-RGVlcGFrMTY5ODQx-RGVlcGFrMw/133_PART_2_JAN_DEC_1911_133_PART_2_JAN_DEC_1911_223.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-RGVlcGFrMTY5ODQx-RGVlcGFrMw",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "A sub‑divisional officer’s report dated 31 March 1910 references sinking a well for the settlers at Sausmond. The district board records the resolution and sanctions the work. Thus an official well was approved for Sausmond in 1910.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 9,
@@ -323,9 +323,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-113976/133_PART_2_JAN_DEC_1911_223?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-113976/133_PART_2_JAN_DEC_1911_223.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-113976",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "A sub‑divisional officer’s report dated 31 March 1910 references sinking a well for the settlers at Sausmond. The district board records the resolution and sanctions the work. Thus an official well was approved for Sausmond in 1910.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 10,
@@ -356,9 +356,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-114537/133_PART_2_JAN_DEC_1911_502?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-114537/133_PART_2_JAN_DEC_1911_502.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-114537",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "A government order dated 26 April 1911 sanctions the sinking of a well for the settlers at Sausmond at an estimated cost of Rs 800. The order is recorded in the board’s minutes. This confirms that a well was officially authorized for Sausmond in 1911.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 11,
@@ -389,9 +389,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-RGVlcGFrOTk3MTM-RGVlcGFrMQ/1913_LBB44240191314?q=sausmund",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-RGVlcGFrOTk3MTM-RGVlcGFrMQ/1913_LBB44240191314.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-RGVlcGFrOTk3MTM-RGVlcGFrMQ",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The document lists several roads and includes one named \"Sausmund Road\". It appears in a sequence of routes from Gunjur through Bangalore-Magadi, Rangaiore-Lysore, and other destinations. The passage also records that special repair estimates for items 2 to 6, totaling Rs 21,980, have been sanctioned.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 12,
@@ -422,9 +422,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-541892/LB-B-44-240-1913-14?q=sausmund",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-541892/LB-B-44-240-1913-14.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-541892",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The passage mirrors the one for id 10, mentioning a road called \"Sausmund Road\" among other routes originating from Gunjur. It indicates that repair estimates for certain road items amount to Rs 21,980 and have been approved.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 13,
@@ -455,9 +455,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-360250/369_PART_3_2_APR_NOV_1949_497?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-360250/369_PART_3_2_APR_NOV_1949_497.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-360250",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The text describes a road segment that starts at the eighth mile of Varikur Road, continues to Sausmund Road, and proceeds via the seventeenth mile of the Bangalore–Hosur Road (Bomanahalli). This segment is part of a network linking Kengeri and other areas such as Vembadevanahalli and Kankanhalli. No additional information about Sausmund itself is provided.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 14,
@@ -488,9 +488,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-RGVlcGFrMTU4OTc-RGVlcGFrMQ/1923_CBB16122192324?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-RGVlcGFrMTU4OTc-RGVlcGFrMQ/1923_CBB16122192324.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-RGVlcGFrMTU4OTc-RGVlcGFrMQ",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The passage reports that the author observed a sisal hemp plantation in Sausmund, noting that it has recently been planted and appears to be thriving. The text does not give further details about the colony beyond this plantation.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 15,
@@ -521,9 +521,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-481900/CB-B-16-122-1923-24?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-481900/CB-B-16-122-1923-24.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-481900",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The content is identical to id 13, noting a newly planted sisal hemp plantation in Sausmund that seems to be doing well. No other details about Sausmund are mentioned.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 16,
@@ -554,9 +554,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-360265/369_PART_3_2_APR_NOV_1949_498?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-360265/369_PART_3_2_APR_NOV_1949_498.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-360265",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "Like id 12, this excerpt records a road segment from the eighth mile of Varikur Road to Sausmund Road via the seventeenth mile of the Bangalore–Hosur Road (Bomanahalli). The passage also lists other roads in the area, but offers no extra information on Sausmund itself.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 17,
@@ -587,9 +587,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-542189/LB-B-24-1-1903-04?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-542189/LB-B-24-1-1903-04.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-542189",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The minor branch list cites a Ganjar–Sausmund road as a project. It includes cost figures such as \"8 50 150\" and \"3 50 150 150\", which appear to represent estimated work or expenses. No further description of the colony of Sausmund is given.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 18,
@@ -620,9 +620,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-RGVlcGFrMjExNzQ-RGVlcGFrMQ/1902_GFB252A6190203?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-RGVlcGFrMjExNzQ-RGVlcGFrMQ/1902_GFB252A6190203.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-RGVlcGFrMjExNzQ-RGVlcGFrMQ",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The document lists a Grunjur–Sausmund road as a minor branch. It contains cost estimates noted as \"3 50) 150/83) 50 150\", though the formatting is unclear. No additional information about Sausmund is provided.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 19,
@@ -653,9 +653,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-RGVlcGFrOTk3MjE-RGVlcGFrMQ/1913_LBB44177191314?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-RGVlcGFrOTk3MjE-RGVlcGFrMQ/1913_LBB44177191314.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-RGVlcGFrOTk3MjE-RGVlcGFrMQ",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "In a table of repairs, the Gunjur–Sausmund road is mentioned with an estimated cost of Rs 150. The passage references several other road repairs, indicating a broader maintenance effort. No further specific details about Sausmund itself appear.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 20,
@@ -686,9 +686,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-RGVlcGFrMTAwOTkx-RGVlcGFrMQ/1914_LBB46222191415?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-RGVlcGFrMTAwOTkx-RGVlcGFrMQ/1914_LBB46222191415.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-RGVlcGFrMTAwOTkx-RGVlcGFrMQ",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "This excerpt similarly lists the Gunjur–Sausmund road in a repair cost table, noting an estimate of Rs 150. It also cites other road repairs, suggesting an ongoing infrastructure project. No additional information about Sausmund is provided.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 21,
@@ -719,9 +719,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-543170/LB-B-46-222-1914-15?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-543170/LB-B-46-222-1914-15.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-543170",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The excerpt lists a series of roads and their lengths. The Gunjur–Sausmond road is noted with a distance of 150 units. No other specific information about Sausmond is provided in this passage.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 22,
@@ -752,9 +752,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545847/Microfilm_Rollno-285_V001?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545847/Microfilm_Rollno-285_V001.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545847",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The document contains a letter requesting information on how a settler could acquire lands in the Sausmond and Whitefield Colonies. It also directs that an assessment be levied on Mr. H. F. Strickland for lands granted to him for rubber cultivation. The passage therefore links Sausmond to land‑acquisition and taxation matters.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 23,
@@ -785,9 +785,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-541900/LB-B-44-177-1913-14?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-541900/LB-B-44-177-1913-14.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-541900",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "This excerpt lists roads, similar to id 20. It records the Gunjur–Sausmond road with a distance of 150 units. No further details about Sausmond are present.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 24,
@@ -818,9 +818,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-487177/GF-B-25-2A-6-1902-03?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-487177/GF-B-25-2A-6-1902-03.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-487177",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The document enumerates minor branch roads. The Gunjur–Sausmond road appears with a length of 150 units. The passage does not mention any other facts concerning Sausmond.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 25,
@@ -851,9 +851,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-546179/Microfilm_Rollno-311_V003?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-546179/Microfilm_Rollno-311_V003.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-546179",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The estimate section sanctions Rs. 1,958 for sinking a well at Sausmond in Bangalore Taluk. It is part of a Government Order dated 28 May 1918 concerning water works. This indicates that infrastructure development was planned at Sausmond.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 26,
@@ -884,9 +884,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545654/Microfilm_Rollno-242_V004?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545654/Microfilm_Rollno-242_V004.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545654",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The excerpt references Benjamin Brooks, a settler of Sausmond, who had a loan of Rs. 400 advanced to him. An enquiry notes that an installment due in June was not collected until May 1899 and asks whether any amount remains unpaid. The passage links Sausmond to land‑settlement and financial records.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 27,
@@ -917,9 +917,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545555/Microfilm_Rollno-219_V003?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545555/Microfilm_Rollno-219_V003.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545555",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The text states that Whitefield and Sausmond have been constituted as circles of the Eurasian and Anglo‑Indian Association in direct communication with its Council. It also notes that the branch has declared itself ceased to exist, though this refers to the Association’s status, not Sausmond directly. The passage confirms Sausmond’s recognition within the association framework.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 28,
@@ -950,9 +950,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545494/Microfilm_Rollno-201_V001?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545494/Microfilm_Rollno-201_V001.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545494",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The excerpt discusses land management for colonies of White‑field and Sausmond. It suggests that a small extent of land may be assigned to each colony, free of assessment, for common pasturage. The passage indicates that land allocation for these colonies was under consideration.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 29,
@@ -983,9 +983,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545564/Microfilm_Rollno-221_V002?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545564/Microfilm_Rollno-221_V002.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545564",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The passage is heavily garbled, but it mentions “Sausmond” in connection with settlers and the granting of pattas. It suggests that settlers from Sausmond may be required to pay arrears before pattas are granted. Due to the corruption, no clear details can be confirmed.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 30,
@@ -1016,9 +1016,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545506/Microfilm_Rollno-204_V003?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545506/Microfilm_Rollno-204_V003.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545506",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The excerpt refers to the granting of individual plots to occupants of Eurasian colonies at Whitefield and Sausmond. It indicates that the Deputy Commissioner was involved in the issuance of such plots. The passage confirms that land allotments were being processed for Sausmond occupants.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 31,
@@ -1049,9 +1049,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545657/Microfilm_Rollno-243_V003?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545657/Microfilm_Rollno-243_V003.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545657",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The passage records that Mr. Benjamin Brookes, a settler of Sausmond in Bangalore taluk, was granted a loan of Rs. 400. It indicates that the first instalment of the loan was approved to be repaid beginning in June 1899. The sanction was recorded by the Deputy Commissioner.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 32,
@@ -1082,9 +1082,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545835/Microfilm_Rollno-282_V002?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545835/Microfilm_Rollno-282_V002.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545835",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The excerpt lists various administrative items, including a reference to a well in Sausmond as part of non‑budgeted work. It also mentions other local concerns such as residents’ appeals and water connections. The well is noted in a brief entry under the section on non‑budgeted works.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 33,
@@ -1115,9 +1115,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-544573/Microfilm_Rollno-016_V005?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-544573/Microfilm_Rollno-016_V005.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-544573",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The text refers to a Eurasian colony located in Sausmond. It appears in a narrative about a visit by an official, but no further details are given.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 34,
@@ -1148,9 +1148,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545499/Microfilm_Rollno-202_V002?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545499/Microfilm_Rollno-202_V002.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545499",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The passage reports that several hundred rubber (Ficus elastica) plants have been planted in Sausmond and are thriving well. It also mentions propagation by layering and expresses surprise that planters have not used the plant more widely for shade or income. The author comments on the potential benefits of rubber cultivation on estates.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 35,
@@ -1181,9 +1181,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545562/Microfilm_Rollno-220_V005?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545562/Microfilm_Rollno-220_V005.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545562",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The record notes the construction of a culvert across Sausmond road in Bangalore taluk, with a cost of Rs. 429. It also lists expenses for wells in nearby towns and for deepening wells. These entries are part of local government accounts for the month of January 1894.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 36,
@@ -1214,9 +1214,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-RGVlcGFrMTAzODIx-RGVlcGFrMQ/Rollno016_Microfilm_Rollno016_V005?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-RGVlcGFrMTAzODIx-RGVlcGFrMQ/Rollno016_Microfilm_Rollno016_V005.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-RGVlcGFrMTAzODIx-RGVlcGFrMQ",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "This excerpt contains the same reference to a Eurasian colony in Sausmond as earlier. It is part of a garbled narrative about a visit and travel itinerary.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 37,
@@ -1247,9 +1247,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545500/Microfilm_Rollno-202_V003?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545500/Microfilm_Rollno-202_V003.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545500",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The text records that land in Sausmond was alienated in favor of the Anglo‑Indian Association for building purposes. It also mentions land in Whitefield, Chikbelandur and Hagdur villages of Bangalore taluk, and notes remission of assessment. The sanction was communicated to the Deputy Commissioner and the Survey Superintendent.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 38,
@@ -1280,9 +1280,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545601/Microfilm_Rollno-229_V005?q=sansmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545601/Microfilm_Rollno-229_V005.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545601",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The passage lists road works, including a road from Gunjur to Sansmond, which appears to be a misspelling of Sausmond. It provides cost details for the construction and indicates the work was part of local road maintenance. The excerpt is part of a ledger of road expenses.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 39,
@@ -1313,9 +1313,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545715/Microfilm_Rollno-269_V001?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545715/Microfilm_Rollno-269_V001.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545715",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "A petition from Mr. A. H. B. Permien, a settler in Sausmond, complains about annoyance caused by the President of the Anglo‑Indian Association of Mysore and Coorg. The request is forwarded for disposal, with a note that action may be taken if a breach of peace is apprehended. It is recorded in the official correspondence of the Chief Inspector.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 40,
@@ -1346,9 +1346,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545651/Microfilm_Rollno-242_V001?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545651/Microfilm_Rollno-242_V001.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545651",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "This document records an inquiry concerning Mr. Benjamin R. Brooks, a settler of Sausmond, about the repayment of the first instalment of his loan of Rs. 400 under the Land Improvement Loans Regulation. It also includes a letter noting 40 cents of rain at Hoskote in September 1900. The enquiry and related correspondence were recorded by the Deputy Commissioner.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 41,
@@ -1379,9 +1379,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545519/Microfilm_Rollno-210_V002?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545519/Microfilm_Rollno-210_V002.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545519",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The document lists a public improvement plan that includes opening a new road from the village of Ganjur to the settlement of Sausmond, as well as a connection from Sarjapur Road. The project appears to be part of a broader set of road and infrastructure developments in the area. No other specific details about Sausmond are given in this excerpt.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 42,
@@ -1412,9 +1412,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545586/Microfilm_Rollno-225_V004?q=sousmont",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545586/Microfilm_Rollno-225_V004.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545586",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The excerpt contains a list of expenditure items for various public works. One item records the construction of a well at Sausmond (spelled \"Sousmont\") in April 1894, with an amount of 700. This indicates that a well was being built in the Sausmond colony during that period.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 43,
@@ -1445,9 +1445,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-26123/48_FULL_BOOK_SCANED?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-26123/48_FULL_BOOK_SCANED.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-26123",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The application concerns the estate of the late John Sone Steele, a pensioned curator of the Mysore Government, who died at Sausmond. His son E.R. Steele and daughter M.A. Steele, both residing in Sausmond, have applied for letters of administration to manage the estate. The record thus notes Sausmond as the place of death and residence of the applicants.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 44,
@@ -1478,9 +1478,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-RGVlcGFrNzYyMTk-RGVlcGFrMw/48_PART2_4_JULY_DEC_1893_48_FULL_BOOK_SCANED?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-RGVlcGFrNzYyMTk-RGVlcGFrMw/48_PART2_4_JULY_DEC_1893_48_FULL_BOOK_SCANED.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-RGVlcGFrNzYyMTk-RGVlcGFrMw",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The application concerns the estate of the late John Sone Steele, a pensioned curator of the Mysore Government, who died at Sausmond. His son E.R. Steele and daughter M.A. Steele, both residing in Sausmond, have applied for letters of administration to manage the estate. The record thus notes Sausmond as the place of death and residence of the applicants.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 45,
@@ -1511,9 +1511,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545690/Microfilm_Rollno-250_V004?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545690/Microfilm_Rollno-250_V004.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545690",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The budget section lists a minor branch road project from Ganjur to Sausmond, allocating funds for construction. This indicates that a road connecting Sausmond to Ganjur was planned or underway. No other Sausmond-specific actions are described.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 46,
@@ -1544,9 +1544,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545644/Microfilm_Rollno-240_V001?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545644/Microfilm_Rollno-240_V001.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545644",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "A revised agreement grants a payment to Mr. George Kolle of Sausmond, Bangalore Township, for a repayment made to him in 1896. The entry confirms Mr. Kolle’s residence in Sausmond and records the settlement of a debt. No other Sausmond-related actions appear in this excerpt.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 47,
@@ -1577,9 +1577,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545504/Microfilm_Rollno-204_V001?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545504/Microfilm_Rollno-204_V001.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545504",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The correspondence refers to a letter about the colonies of Sausmond and another colony (Dec.) in 1886, concerning surveying for grazing land. It involves counting cattle and determining grazing area for settlers belonging to those colonies. Thus Sausmond is listed as one of the colonies under review for grazing purposes.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 48,
@@ -1610,9 +1610,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545673/Microfilm_Rollno-247_V002?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545673/Microfilm_Rollno-247_V002.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545673",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "Similar to earlier road listings, this excerpt records a minor branch road project from Gunjur to Sausmond with an allocated cost. This shows that construction of a road to Sausmond was part of the infrastructure plan. No further Sausmond details are provided.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 49,
@@ -1643,9 +1643,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545575/Microfilm_Rollno-223_V002?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545575/Microfilm_Rollno-223_V002.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545575",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The document records a proposal to open a road from Sarjapur Road to Sausmond in Bangalore Township, with the project referenced in Rev. 81. It indicates a planned improvement to connect Sausmond with a nearby major road. No other Sausmond-specific information is present.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 50,
@@ -1676,9 +1676,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-545693/Microfilm_Rollno-251_V003?q=sausmund",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-545693/Microfilm_Rollno-251_V003.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-545693",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The list of roads includes a connection from Gunyur to Sausmund (likely Sausmond), indicating that Sausmund was linked by a local road. This entry shows that Sausmund was part of the network of roads surveyed or planned. No further details are given about the settlement.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 51,
@@ -1709,9 +1709,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-RGVlcGFrNjYyOTc1-RGVlcGFrMQ/1972_PART_1_JUL_DEC_1972_PART_1_JUL_DEC_FULL_BOOK?q=sausmund",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-RGVlcGFrNjYyOTc1-RGVlcGFrMQ/1972_PART_1_JUL_DEC_1972_PART_1_JUL_DEC_FULL_BOOK.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-RGVlcGFrNjYyOTc1-RGVlcGFrMQ",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The passage lists roads managed by the Public Works Department, including a route to Sausmond (spelled Sausmund). It gives distances and indicates that the Sausmond road is part of the PWD network. No further details are provided about the colony itself.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 52,
@@ -1742,9 +1742,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-152944/173_FULL_BOOK_SCANED?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-152944/173_FULL_BOOK_SCANED.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-152944",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The documents contain a 1923 docket (No. 1343) estimating repairs for a Sausmond road. It records an estimated amount of 560 for those repairs. No other Sausmond-related actions are noted.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 53,
@@ -1775,9 +1775,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-RGVlcGFrMjA4ODA5-RGVlcGFrMw/173_PART_2_3_JAN_DEC_JAN_OCT_1923_173_FULL_BOOK_SCANED?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-RGVlcGFrMjA4ODA5-RGVlcGFrMw/173_PART_2_3_JAN_DEC_JAN_OCT_1923_173_FULL_BOOK_SCANED.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-RGVlcGFrMjA4ODA5-RGVlcGFrMw",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "The documents contain a 1923 docket (No. 1343) estimating repairs for a Sausmond road. It records an estimated amount of 560 for those repairs. No other Sausmond-related actions are noted.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 54,
@@ -1808,9 +1808,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-113576/133_FULL_BOOK_SCANED?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-113576/133_FULL_BOOK_SCANED.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-113576",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "A 1910 Sub-Divisional Officer report (Yadi No. 1031) is recorded, recommending the sinking of a well for settlers in Sausmond. The District Board sanctioned this project in resolution. It indicates a development activity at Sausmond.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 55,
@@ -1841,9 +1841,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-RGVlcGFrMTY5NDQx-RGVlcGFrMw/133_PART_2_JAN_DEC_1911_133_FULL_BOOK_SCANED?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-RGVlcGFrMTY5NDQx-RGVlcGFrMw/133_PART_2_JAN_DEC_1911_133_FULL_BOOK_SCANED.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-RGVlcGFrMTY5NDQx-RGVlcGFrMw",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "A 1910 Sub-Divisional Officer report (Yadi No. 1031) is recorded, recommending the sinking of a well for settlers in Sausmond. The District Board sanctioned this project in resolution. It indicates a development activity at Sausmond.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 56,
@@ -1874,9 +1874,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-544558/Microfilm_Rollno-014_V004?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-544558/Microfilm_Rollno-014_V004.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-544558",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "An 1883 report in the Karnataka Prajaksa notes the colonies at Whitefield and Sausmond. It states that Sausmond’s cottages were unfinished and that there were no colonists or scholars present. The report indicates the colony was still under development.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 57,
@@ -1907,9 +1907,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-357719/369_FULL_BOOK_SCANED?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-357719/369_FULL_BOOK_SCANED.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-357719",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "A road map shows Sausmond Road as a segment of the route from 8th mile of Varthur Road to Panathur, indicating it as part of the network connecting to other localities. No further commentary on the colony is provided.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 58,
@@ -1940,9 +1940,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-RGVlcGFrMTAzODA2-RGVlcGFrMQ/Rollno014_Microfilm_Rollno014_V004?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-RGVlcGFrMTAzODA2-RGVlcGFrMQ/Rollno014_Microfilm_Rollno014_V004.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-RGVlcGFrMTAzODA2-RGVlcGFrMQ",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "An 1883 report in the Karnataka Prajaksa notes the colonies at Whitefield and Sausmond. It states that Sausmond’s cottages were unfinished and that there were no colonists or scholars present. The report indicates the colony was still under development.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     },
     {
       "rank": 59,
@@ -1973,9 +1973,9 @@
       "match_url": "https://archive.org/details/karnataka-state-archives-2026-115836/138_FULL_BOOLK_SCANED?q=sausmond",
       "pdf_url": "https://archive.org/download/karnataka-state-archives-2026-115836/138_FULL_BOOLK_SCANED.pdf",
       "thumbnail_url": "https://archive.org/services/img/karnataka-state-archives-2026-115836",
-      "ai_summary": null,
-      "ai_provider": null,
-      "ai_model": null
+      "ai_summary": "A resolution from 1911 (Amildar's itilla No. 126) includes a request to sink a trial well at Sausmond, with an estimate of Rs. 22. The measure was sanctioned under the Local Boards Rules, showing a planned water project for the Sausmond area.",
+      "ai_provider": "groq",
+      "ai_model": "openai/gpt-oss-20b"
     }
   ]
 }
