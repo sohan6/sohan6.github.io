@@ -113,15 +113,81 @@ title: Sausmond
 .sausmond-card-links a { color: var(--accent); }
 
 .sausmond-empty { color: var(--text-secondary); padding: 2em 0; }
+
+.sausmond-root h2 { margin-top: 1.6em; }
+.sausmond-intro ul { color: var(--text-secondary); }
+.sausmond-note { font-style: italic; color: var(--text-muted); }
+.sausmond-figure {
+  margin: 1.2em 0;
+  padding: 0.75em;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.sausmond-figure img { display: block; width: 100%; border-radius: 4px; }
+.sausmond-figure figcaption {
+  margin-top: 0.6em;
+  font-size: 0.85em;
+  color: var(--text-muted);
+}
 </style>
 
 <p class="sausmond-intro">
-Sausmond was a small colony near Bangalore, close to Whitefield and
-Duckworth &mdash; both Anglo-Indian settlements &mdash; and it turns up
-again and again in early-20th-century records: proposals to sink a well, a
-request to open a road, correspondence about water supply, land set aside
-for building by the Anglo-Indian Association. It left no other easy-to-find
-trace today. This page collects every document held by the
+Sausmond was one of several large land grants made by the Maharajah of
+Mysore to Anglo-Indian settlers, part of a wider effort to build
+agricultural townships for the community &mdash; itself part of a much
+older ambition the Maharajahs of Mysore had long held, to make Mysore a
+genuinely cosmopolitan state, open to communities from across India and
+beyond. Whitefield, today in a rather different form, is the best-known
+survivor of those settlements; Sausmond and others like it have mostly
+faded from memory, and very little research exists on what became of
+them. This page is an attempt to change that: gathering what can be
+traced through gazette notices, land records, and other archival
+documents, and being careful to separate what is documented from what is
+only remembered or assumed.
+</p>
+
+<h2>The land grant</h2>
+<p class="sausmond-intro">
+Land for Sausmond was granted across several revenue villages and survey
+numbers within Varthur Hobli &mdash; Doddakanahalli, Chikkanenahalli,
+Halnayakanahalli, Chikkabellandur, Mullur, Gunjur, and Kachamanahalli, as
+far as can currently be traced.
+<span class="sausmond-note">The gazette notification recording the grant
+itself has not yet been located, so this list should be treated as
+provisional.</span>
+</p>
+
+<h2>Title deeds traced</h2>
+<p class="sausmond-intro">
+Property title deeds referencing the grant have so far been traced in
+three villages:
+</p>
+<ul class="sausmond-intro">
+<li>Chikkakanneli</li>
+<li>Doddakanneli</li>
+<li>Chikkabellandur</li>
+</ul>
+
+<h2>From Sausmond to Carmelaram</h2>
+<p class="sausmond-intro">
+Several recent-year sale deeds refer to the place as "Sasmandu" &mdash;
+the Kannada rendering of Sausmond &mdash; which confirms the place name
+in the documentary record, even though it is no longer used locally.
+Today the area is known as Carmelaram, named for Our Lady of Mount Carmel
+after friars of the OCD (Discalced Carmelite) order purchased large
+tracts of land here and divided them among various congregations &mdash;
+likely renaming the area sometime in the 1960s or '70s.
+</p>
+
+<figure class="sausmond-figure">
+<img src="/assets/sausmond/images/1955-survey-map-sausmond.jpg" alt="1955 U.S. Army Map Service survey map showing Sausmond labeled between Rifle Range and Gunjur, just south of Vartur (Varthur)">
+<figcaption>Sausmond, labeled by name, on a 1955 U.S. Army Map Service survey of the Bangalore area &mdash; sitting just south of Vartur (Varthur) and Whitefield, and just west of Gunjur. (<a href="https://commons.wikimedia.org/wiki/File:Map_India_and_Pakistan_1-250,000_Tile_ND_44-13_Bangalore.jpg" target="_blank" rel="noopener">Full map, public domain, via Wikimedia Commons</a>)</figcaption>
+</figure>
+
+<h2>The documents</h2>
+<p class="sausmond-intro">
+This page also collects every document held by the
 <strong>Karnataka State Archives</strong> that mentions Sausmond. Documents
 where the word appears directly in the scanned page
 (<span class="sausmond-badge sausmond-badge-fulltext" style="display:inline">Full text match</span>,
