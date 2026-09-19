@@ -38,13 +38,15 @@ Optionally (--summarize), each item's OCR text derivative (the *_djvu.txt
 file archive.org already generates — see e.g.
 https://archive.org/stream/{identifier}/{file}_djvu.txt) is fetched, the
 passage around the Sausmond mention is extracted, and an AI model turns it
-into a plain-English 2-4 line summary. Works with either provider,
-auto-detected from whichever API key is set in the environment (Anthropic
-is tried first if both are set):
+into a plain-English 2-4 line summary. Works with any of three providers,
+auto-detected from whichever API key is set in the environment (checked in
+this order: Anthropic, OpenAI, Gemini):
   - Anthropic: `pip install anthropic`, set ANTHROPIC_API_KEY (or `ant auth
     login`). Default model: claude-opus-5.
   - OpenAI:    `pip install openai`, set OPENAI_API_KEY. Default model:
     gpt-4o-mini.
+  - Gemini:    `pip install google-genai`, set GEMINI_API_KEY (or
+    GOOGLE_API_KEY). Default model: gemini-2.5-flash.
 Pass --summary-provider to force one explicitly, and --summary-model to
 override the default model. Previously generated summaries are reused on
 re-run (keyed on the underlying snippet + model) so refreshing doesn't
@@ -56,7 +58,7 @@ Usage:
     python tools/sausmond_catalog.py --no-fulltext
     python tools/sausmond_catalog.py --output assets/sausmond/catalog.json
     python tools/sausmond_catalog.py --summarize
-    python tools/sausmond_catalog.py --summarize --summary-provider openai
+    python tools/sausmond_catalog.py --summarize --summary-provider gemini
 
 Re-run any time to pick up newly digitized documents — the Karnataka
 State Archives collection on archive.org is actively growing.
@@ -252,17 +254,33 @@ SUMMARY_SYSTEM_PROMPT = (
 DEFAULT_SUMMARY_MODEL = {
     "anthropic": "claude-opus-5",
     "openai": "gpt-4o-mini",
+    "gemini": "gemini-2.5-flash",
+}
+# Provider -> (module to `import`, pip package name). Gemini's is the odd one
+# out: the import path (google.genai) differs from the pip package name
+# (google-genai), which differs from our own --summary-provider value.
+PROVIDER_MODULE = {
+    "anthropic": "anthropic",
+    "openai": "openai",
+    "gemini": "google.genai",
+}
+PROVIDER_PIP_PACKAGE = {
+    "anthropic": "anthropic",
+    "openai": "openai",
+    "gemini": "google-genai",
 }
 
 
 def detect_provider() -> str | None:
     """Auto-picks a provider from whichever API key is set in the
-    environment. Anthropic wins if both are set; pass --summary-provider
-    to force one explicitly."""
+    environment, checked in this order: Anthropic, then OpenAI, then
+    Gemini. Pass --summary-provider to force one explicitly instead."""
     if os.environ.get("ANTHROPIC_API_KEY"):
         return "anthropic"
     if os.environ.get("OPENAI_API_KEY"):
         return "openai"
+    if os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY"):
+        return "gemini"
     return None
 
 
@@ -284,6 +302,15 @@ def build_ai_client(provider: str):
             raise RuntimeError(
                 f"could not set up the OpenAI client: {e}\n"
                 f"Set the OPENAI_API_KEY environment variable."
+            ) from e
+    elif provider == "gemini":
+        from google import genai
+        try:
+            return genai.Client()  # resolves GEMINI_API_KEY, falling back to GOOGLE_API_KEY
+        except Exception as e:
+            raise RuntimeError(
+                f"could not set up the Gemini client: {e}\n"
+                f"Set the GEMINI_API_KEY (or GOOGLE_API_KEY) environment variable."
             ) from e
     else:
         raise ValueError(f"unknown summary provider: {provider!r}")
@@ -323,6 +350,26 @@ def summarize_with_ai(provider: str, client, model: str, title: str, context: st
             print(f"  [ai] summarization failed for {title!r}: {e}")
             return None
         text = (response.choices[0].message.content or "").strip()
+        return text or None
+
+    elif provider == "gemini":
+        from google.genai import types as genai_types
+        try:
+            response = client.models.generate_content(
+                model=model,
+                contents=user_content,
+                config=genai_types.GenerateContentConfig(
+                    system_instruction=SUMMARY_SYSTEM_PROMPT,
+                    max_output_tokens=400,
+                ),
+            )
+        except Exception as e:
+            # Caught broadly: the google-genai SDK's exception hierarchy
+            # isn't pinned against live docs here, so this favors skipping
+            # one item over crashing the whole batch on an unexpected type.
+            print(f"  [ai] summarization failed for {title!r}: {e}")
+            return None
+        text = (response.text or "").strip()
         return text or None
 
     else:
@@ -494,14 +541,15 @@ def main() -> None:
     parser.add_argument("--summarize", action="store_true",
                          help="generate a 2-4 line AI summary per document from its OCR text. "
                               "Auto-detects the provider from whichever API key is set "
-                              "(ANTHROPIC_API_KEY or OPENAI_API_KEY); re-runs reuse unchanged "
-                              "summaries")
-    parser.add_argument("--summary-provider", choices=["anthropic", "openai"], default=None,
+                              "(ANTHROPIC_API_KEY, OPENAI_API_KEY, or GEMINI_API_KEY / "
+                              "GOOGLE_API_KEY); re-runs reuse unchanged summaries")
+    parser.add_argument("--summary-provider", choices=["anthropic", "openai", "gemini"], default=None,
                          help="force a specific provider for --summarize instead of "
                               "auto-detecting from which API key is set")
     parser.add_argument("--summary-model", default=None,
                          help="model to use for --summarize (default depends on provider: "
-                              "claude-opus-5 for anthropic, gpt-4o-mini for openai)")
+                              "claude-opus-5 for anthropic, gpt-4o-mini for openai, "
+                              "gemini-2.5-flash for gemini)")
     args = parser.parse_args()
 
     provider = None
@@ -510,14 +558,14 @@ def main() -> None:
         provider = args.summary_provider or detect_provider()
         if provider is None:
             parser.error(
-                "--summarize needs an API key set: export ANTHROPIC_API_KEY or OPENAI_API_KEY "
-                "(or pass --summary-provider to force one and get a clearer error)"
+                "--summarize needs an API key set: export ANTHROPIC_API_KEY, OPENAI_API_KEY, "
+                "or GEMINI_API_KEY (or pass --summary-provider to force one and get a clearer error)"
             )
-        package = provider  # package name matches provider name for both
         try:
-            __import__(package)
+            __import__(PROVIDER_MODULE[provider])
         except ImportError:
-            parser.error(f"--summarize with provider '{provider}' requires: pip install {package}")
+            parser.error(f"--summarize with provider '{provider}' requires: "
+                         f"pip install {PROVIDER_PIP_PACKAGE[provider]}")
         summary_model = args.summary_model or DEFAULT_SUMMARY_MODEL[provider]
 
     prev_items = None

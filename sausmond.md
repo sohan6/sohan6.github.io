@@ -179,12 +179,13 @@ any time to pick up newly added documents:
 <pre><code>python tools/sausmond_catalog.py
 # or, to try a wider net of spelling variants:
 python tools/sausmond_catalog.py --terms sausmond,sausmund,sausmont,sawsmond
-# or, to add a short AI-written summary per document: set either ANTHROPIC_API_KEY
-# (pip install anthropic) or OPENAI_API_KEY (pip install openai) and it's
+# or, to add a short AI-written summary per document: set ANTHROPIC_API_KEY
+# (pip install anthropic), OPENAI_API_KEY (pip install openai), or
+# GEMINI_API_KEY (pip install google-genai) and the provider is
 # auto-detected. Re-runs reuse unchanged summaries, so this only pays for
 # documents that are new or whose match changed.
 python tools/sausmond_catalog.py --summarize
-python tools/sausmond_catalog.py --summarize --summary-provider openai  # force a provider</code></pre>
+python tools/sausmond_catalog.py --summarize --summary-provider gemini  # force a provider</code></pre>
 
 <p class="sausmond-intro">
 That overwrites <code>assets/sausmond/catalog.json</code>, which this page
