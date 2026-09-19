@@ -34,11 +34,21 @@ public `@internetarchive/search-service` npm package, but it could change
 without notice. If it starts failing, re-run with --no-fulltext to fall
 back to metadata-only search.
 
+Optionally (--summarize), each item's OCR text derivative (the *_djvu.txt
+file archive.org already generates — see e.g.
+https://archive.org/stream/{identifier}/{file}_djvu.txt) is fetched, the
+passage around the Sausmond mention is extracted, and Claude turns it into
+a plain-English 2-4 line summary. This requires `pip install anthropic`
+and an ANTHROPIC_API_KEY environment variable — see --summarize --help
+below. Previously generated summaries are reused on re-run (keyed on the
+underlying snippet) so refreshing doesn't re-pay for unchanged documents.
+
 Usage:
     python tools/sausmond_catalog.py
     python tools/sausmond_catalog.py --terms sausmond,sausmund,sausmont
     python tools/sausmond_catalog.py --no-fulltext
     python tools/sausmond_catalog.py --output assets/sausmond/catalog.json
+    python tools/sausmond_catalog.py --summarize
 
 Re-run any time to pick up newly digitized documents — the Karnataka
 State Archives collection on archive.org is actively growing.
@@ -175,6 +185,81 @@ def find_matches(text: str, terms: list[str]) -> list[str]:
     return [t for t in terms if t.lower() in lowered]
 
 
+# --- Optional: AI summaries (--summarize) ------------------------------------
+
+def find_text_derivative(files: list[dict]) -> str | None:
+    """Locate the plain-text OCR derivative archive.org already generated
+    for this item (the '_djvu.txt' file), same as the one linked from the
+    'Full text' view on an item's archive.org page."""
+    for f in files:
+        if f.get("format") == "DjVuTXT":
+            return f.get("name")
+    for f in files:
+        if f.get("name", "").lower().endswith("_djvu.txt"):
+            return f.get("name")
+    return None
+
+
+def fetch_full_text(identifier: str, filename: str) -> str | None:
+    try:
+        url = DOWNLOAD_URL.format(identifier=identifier, filename=filename)
+        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            return resp.read().decode("utf-8", errors="replace")
+    except urllib.error.URLError:
+        return None
+
+
+def extract_context(full_text: str, terms: list[str], window: int = 700) -> str | None:
+    """Returns a window of raw OCR text around the first mention of any
+    search term, for feeding to the summarizer — cheaper and more focused
+    than summarizing an entire scanned book."""
+    lowered = full_text.lower()
+    best_pos = None
+    for term in terms:
+        pos = lowered.find(term.lower())
+        if pos != -1 and (best_pos is None or pos < best_pos):
+            best_pos = pos
+    if best_pos is None:
+        return None
+    start = max(0, best_pos - window // 2)
+    end = min(len(full_text), best_pos + window // 2)
+    return full_text[start:end].strip()
+
+
+SUMMARY_SYSTEM_PROMPT = (
+    "You summarize short excerpts of OCR'd text from historical Karnataka "
+    "State Archives documents for a catalog of records mentioning a colony "
+    "called Sausmond. Write 2-4 plain-English sentences describing what "
+    "this specific passage says about Sausmond. Base the summary only on "
+    "the text given — never invent names, dates, or events not present in "
+    "it. OCR text is often garbled (misspellings, stray characters); read "
+    "through minor noise, but if the passage is too corrupted to make "
+    "sense of, say that plainly instead of guessing. No preamble, no "
+    "markdown — plain sentences only."
+)
+
+
+def summarize_with_ai(client, model: str, title: str, context: str) -> str | None:
+    import anthropic  # noqa: F401  (imported here so --summarize stays optional)
+
+    user_content = f'Document title: "{title}"\n\nOCR excerpt:\n"""\n{context}\n"""'
+    try:
+        response = client.messages.create(
+            model=model,
+            max_tokens=400,
+            system=SUMMARY_SYSTEM_PROMPT,
+            output_config={"effort": "low"},
+            messages=[{"role": "user", "content": user_content}],
+        )
+    except anthropic.APIError as e:
+        print(f"  [ai] summarization failed for {title!r}: {e}")
+        return None
+
+    text = "".join(b.text for b in response.content if b.type == "text").strip()
+    return text or None
+
+
 def collect_fulltext_hits(terms: list[str], creator: str) -> dict:
     """Runs one full-text query per term, dedupes by file_basename (falling
     back to identifier) so the same underlying scan uploaded twice under
@@ -211,7 +296,21 @@ def collect_fulltext_hits(terms: list[str], creator: str) -> dict:
     return best
 
 
-def build_catalog(terms: list[str], creator: str, rows: int, with_metadata: bool, use_fulltext: bool) -> dict:
+def build_catalog(
+    terms: list[str], creator: str, rows: int, with_metadata: bool, use_fulltext: bool,
+    summarize: bool = False, summary_model: str = "claude-opus-5", prev_items: dict | None = None,
+) -> dict:
+    ai_client = None
+    ai_new, ai_reused = 0, 0
+    if summarize:
+        import anthropic
+        try:
+            ai_client = anthropic.Anthropic()  # resolves ANTHROPIC_API_KEY / `ant auth login` profile
+        except anthropic.AnthropicError as e:
+            raise RuntimeError(
+                f"could not set up the Anthropic client: {e}\n"
+                f"Set the ANTHROPIC_API_KEY environment variable, or run `ant auth login`."
+            ) from e
     fulltext_hits = collect_fulltext_hits(terms, creator) if use_fulltext else {}
     fulltext_list = sorted(fulltext_hits.values(), key=lambda h: h["_score"], reverse=True)
     fulltext_ids = {h["identifier"] for h in fulltext_list}
@@ -253,6 +352,26 @@ def build_catalog(terms: list[str], creator: str, rows: int, with_metadata: bool
         pdf_url = DOWNLOAD_URL.format(identifier=identifier, filename=pdf_name) if pdf_name else None
         relevance_score = round(100 * (total - rank + 1) / total) if total else 0
 
+        ai_summary = None
+        if summarize:
+            prev = (prev_items or {}).get(identifier)
+            if prev and prev.get("ai_summary") and prev.get("description") == snippet:
+                ai_summary = prev["ai_summary"]
+                ai_reused += 1
+            else:
+                text_filename = find_text_derivative(files)
+                context = None
+                if text_filename:
+                    full_text = fetch_full_text(identifier, text_filename)
+                    if full_text:
+                        context = extract_context(full_text, terms)
+                if context:
+                    ai_summary = summarize_with_ai(ai_client, summary_model, title, context)
+                    if ai_summary:
+                        ai_new += 1
+                else:
+                    print(f"  [ai] no readable OCR text near a match for {title!r}; skipping summary")
+
         items.append({
             "rank": rank,
             "relevance_score": relevance_score,
@@ -274,7 +393,11 @@ def build_catalog(terms: list[str], creator: str, rows: int, with_metadata: bool
             "match_url": entry.get("match_url"),
             "pdf_url": pdf_url,
             "thumbnail_url": THUMBNAIL_URL.format(identifier=identifier),
+            "ai_summary": ai_summary,
         })
+
+    if summarize:
+        print(f"  [ai] {ai_new} new summaries generated, {ai_reused} reused from the previous catalog")
 
     return {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -284,6 +407,7 @@ def build_catalog(terms: list[str], creator: str, rows: int, with_metadata: bool
         "fulltext_hits": len(fulltext_list),
         "metadata_only_hits": len(md_only),
         "total_found": total,
+        "ai_summarized": summarize,
         "items": items,
     }
 
@@ -299,14 +423,40 @@ def main() -> None:
                          help="skip per-item metadata enrichment (faster, less detail)")
     parser.add_argument("--no-fulltext", action="store_true",
                          help="skip the full-text search backend, use metadata search only")
+    parser.add_argument("--summarize", action="store_true",
+                         help="generate a 2-4 line AI summary per document from its OCR text "
+                              "(requires `pip install anthropic` and an ANTHROPIC_API_KEY env "
+                              "var, or `ant auth login`); re-runs reuse unchanged summaries")
+    parser.add_argument("--summary-model", default="claude-opus-5",
+                         help="model to use for --summarize (default: claude-opus-5)")
     args = parser.parse_args()
 
+    if args.summarize:
+        try:
+            import anthropic  # noqa: F401
+        except ImportError:
+            parser.error("--summarize requires the 'anthropic' package: pip install anthropic")
+
+    prev_items = None
+    if args.summarize and args.output.exists():
+        try:
+            prev_catalog = json.loads(args.output.read_text(encoding="utf-8"))
+            prev_items = {item["identifier"]: item for item in prev_catalog.get("items", [])}
+        except (json.JSONDecodeError, OSError):
+            prev_items = None
+
     terms = [t.strip() for t in args.terms.split(",") if t.strip()]
-    catalog = build_catalog(
-        terms, args.creator, args.rows,
-        with_metadata=not args.no_metadata,
-        use_fulltext=not args.no_fulltext,
-    )
+    try:
+        catalog = build_catalog(
+            terms, args.creator, args.rows,
+            with_metadata=not args.no_metadata,
+            use_fulltext=not args.no_fulltext,
+            summarize=args.summarize,
+            summary_model=args.summary_model,
+            prev_items=prev_items,
+        )
+    except RuntimeError as e:
+        parser.error(str(e))
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(catalog, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

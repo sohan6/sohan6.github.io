@@ -48,6 +48,9 @@
           (dept ? '<span class="sausmond-dept">' + escapeHtml(dept) + '</span>' : '') +
         '</div>' +
         '<h3 class="sausmond-card-title"><a href="' + escapeHtml(primaryLink) + '" target="_blank" rel="noopener">' + escapeHtml(title) + '</a></h3>' +
+        (item.ai_summary
+          ? '<p class="sausmond-ai-summary"><span class="sausmond-ai-summary-label">AI summary</span>' + escapeHtml(item.ai_summary) + '</p>'
+          : '') +
         '<p class="sausmond-card-desc">' + highlight(desc, item.matched_terms) + '</p>' +
         '<div class="sausmond-meter" title="Relevance: ' + item.relevance_score + '%">' +
           '<div class="sausmond-meter-track"><div class="sausmond-meter-fill" style="width:' + item.relevance_score + '%"></div></div>' +

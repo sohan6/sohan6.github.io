@@ -28,6 +28,11 @@ title: Sausmond
   }
 }
 
+/* Widen this page's content column beyond Lanyon's narrow blog width so the
+   tile grid isn't forced down to 2 per row. Scoped to this page only, since
+   Jekyll renders each page as its own static file. */
+.container.content { max-width: min(94vw, 1200px); }
+
 .sausmond-intro { color: var(--text-secondary); }
 .sausmond-intro code { background: var(--border); padding: 0 4px; border-radius: 3px; }
 
@@ -57,7 +62,7 @@ title: Sausmond
 
 #sausmond-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 1em;
 }
 
@@ -87,6 +92,25 @@ title: Sausmond
 .sausmond-card-title a:hover { text-decoration: underline; }
 .sausmond-card-desc { margin: 0; font-size: 0.92em; color: var(--text-secondary); line-height: 1.45; }
 .sausmond-card-desc mark { background: var(--accent-track); color: var(--text-primary); border-radius: 2px; padding: 0 2px; }
+
+.sausmond-ai-summary {
+  margin: 0;
+  font-size: 0.92em;
+  line-height: 1.45;
+  color: var(--text-primary);
+  background: var(--accent-track);
+  border-radius: 6px;
+  padding: 0.6em 0.75em;
+}
+.sausmond-ai-summary-label {
+  display: block;
+  font-size: 0.72em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--accent);
+  margin-bottom: 0.25em;
+}
 
 .sausmond-meter { display: flex; align-items: center; gap: 0.6em; }
 .sausmond-meter-track { flex: 1; height: 6px; border-radius: 3px; background: var(--accent-track); overflow: hidden; }
@@ -154,7 +178,11 @@ any time to pick up newly added documents:
 
 <pre><code>python tools/sausmond_catalog.py
 # or, to try a wider net of spelling variants:
-python tools/sausmond_catalog.py --terms sausmond,sausmund,sausmont,sawsmond</code></pre>
+python tools/sausmond_catalog.py --terms sausmond,sausmund,sausmont,sawsmond
+# or, to add a short AI-written summary per document (needs `pip install anthropic`
+# and an ANTHROPIC_API_KEY): re-runs reuse unchanged summaries, so this only pays
+# for documents that are new or whose match changed.
+python tools/sausmond_catalog.py --summarize</code></pre>
 
 <p class="sausmond-intro">
 That overwrites <code>assets/sausmond/catalog.json</code>, which this page
