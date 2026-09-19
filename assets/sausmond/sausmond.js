@@ -77,7 +77,7 @@
 
     list.innerHTML = "";
     if (!items.length) {
-      list.innerHTML = '<p class="sausmond-empty">No documents found yet. Run the catalog script to refresh, or widen the spelling variants it searches for.</p>';
+      list.innerHTML = '<p class="sausmond-empty">No documents found yet. Please check back later.</p>';
       return;
     }
     items.forEach(function (item) { list.appendChild(card(item)); });
@@ -87,11 +87,10 @@
     var meta = document.getElementById("sausmond-meta");
     if (meta) {
       meta.textContent = catalog.total_found + " document" + (catalog.total_found === 1 ? "" : "s") +
-        " found (" + catalog.fulltext_hits + " full text, " + catalog.metadata_only_hits + " metadata-only)" +
-        " · last refreshed " + catalog.generated_at.replace("T", " ").replace("Z", " UTC");
+        " found (" + catalog.fulltext_hits + " full text match" + (catalog.fulltext_hits === 1 ? "" : "es") +
+        ", " + catalog.metadata_only_hits + " metadata match" + (catalog.metadata_only_hits === 1 ? "" : "es") + ")" +
+        " · last updated " + catalog.generated_at.slice(0, 10);
     }
-    var queryEl = document.getElementById("sausmond-query");
-    if (queryEl) queryEl.textContent = catalog.metadata_query;
 
     render(catalog, "relevance");
 
@@ -113,7 +112,7 @@
       .catch(function (err) {
         var list = document.getElementById("sausmond-list");
         if (list) {
-          list.innerHTML = '<p class="sausmond-empty">Couldn\'t load the catalog (' + escapeHtml(err.message) + '). Try running <code>python tools/sausmond_catalog.py</code> to regenerate it.</p>';
+          list.innerHTML = '<p class="sausmond-empty">Couldn\'t load the catalog right now. Please try again later.</p>';
         }
       });
   });
