@@ -1,2 +1,7 @@
 __pycache__/
 *.pyc
+
+# Raw British Newspaper Archive exports for tools/bna_import.py --
+# never committed, source data only.
+test.json
+bna_export*.json

@@ -14,6 +14,8 @@ title: Sausmond
   --border:         rgba(11,11,11,0.10);
   --accent:         #2a78d6;
   --accent-track:   #cde2fb;
+  --paid-track:     #fbe8c6;
+  --paid-text:      #8a5a00;
 }
 @media (prefers-color-scheme: dark) {
   .sausmond-root {
@@ -25,6 +27,8 @@ title: Sausmond
     --border:         rgba(255,255,255,0.10);
     --accent:         #3987e5;
     --accent-track:   #184f95;
+    --paid-track:     #4a3510;
+    --paid-text:      #e3b567;
   }
 }
 
@@ -79,6 +83,7 @@ title: Sausmond
 }
 .sausmond-badge-fulltext { background: var(--accent-track); color: var(--accent); }
 .sausmond-badge-metadata { background: var(--border); color: var(--text-secondary); }
+.sausmond-badge-bna { background: var(--paid-track); color: var(--paid-text); }
 .sausmond-card-title { margin: 0; font-size: 1.05em; line-height: 1.3; }
 .sausmond-card-title a { color: var(--text-primary); text-decoration: none; }
 .sausmond-card-title a:hover { text-decoration: underline; }
@@ -215,7 +220,10 @@ where the word appears directly in the scanned page
 shown with the actual matching sentence) are the most solid evidence and
 are listed first; documents found only through their catalog description
 (<span class="sausmond-badge sausmond-badge-metadata" style="display:inline">Metadata match</span>)
-follow after.
+follow after. A few results also come from newspaper archives
+(<span class="sausmond-badge sausmond-badge-bna" style="display:inline">Paid source</span>)
+&mdash; these link to a subscription-only site, so the preview snippet
+shown here is all that's freely visible without an account there.
 </p>
 
 <div class="sausmond-toolbar">

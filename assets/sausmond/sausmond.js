@@ -26,26 +26,37 @@
     return item.date_is_exact ? item.date : "c. " + item.date;
   }
 
+  var SOURCE_LABEL = { fulltext: "Full text match", metadata: "Metadata match", bna: "Paid source" };
+  var SOURCE_CLASS = { fulltext: "sausmond-badge-fulltext", metadata: "sausmond-badge-metadata", bna: "sausmond-badge-bna" };
+
   function card(item) {
     var el = document.createElement("article");
     el.className = "sausmond-card";
 
     var title = item.title || item.identifier;
     var desc = item.description || "No description available.";
+    var isBna = item.source === "bna";
     var dept = [item.department, item.document_belongs].filter(Boolean).join(" · ");
+    var newspaper = [item.newspaper_name, item.publication_place].filter(Boolean).join(", ");
     var primaryLink = item.match_url || item.archive_url;
-    var sourceLabel = item.source === "fulltext" ? "Full text match" : "Metadata match";
-    var sourceClass = item.source === "fulltext" ? "sausmond-badge-fulltext" : "sausmond-badge-metadata";
+    var sourceLabel = SOURCE_LABEL[item.source] || item.source;
+    var sourceClass = SOURCE_CLASS[item.source] || "sausmond-badge-metadata";
+    var linkLabel = isBna
+      ? "Search on British Newspaper Archive"
+      : (item.match_url ? "View match on archive.org" : "View on archive.org");
 
     el.innerHTML =
-      '<div class="sausmond-card-thumb">' +
-        '<img src="' + escapeHtml(item.thumbnail_url) + '" alt="" loading="lazy" onerror="this.parentElement.style.display=\'none\'">' +
-      '</div>' +
+      (item.thumbnail_url
+        ? '<div class="sausmond-card-thumb">' +
+            '<img src="' + escapeHtml(item.thumbnail_url) + '" alt="" loading="lazy" onerror="this.parentElement.style.display=\'none\'">' +
+          '</div>'
+        : '') +
       '<div class="sausmond-card-body">' +
         '<div class="sausmond-card-meta">' +
           '<span class="sausmond-badge ' + sourceClass + '">' + sourceLabel + '</span>' +
           '<span class="sausmond-date">' + escapeHtml(formatDate(item)) + '</span>' +
           (dept ? '<span class="sausmond-dept">' + escapeHtml(dept) + '</span>' : '') +
+          (newspaper ? '<span class="sausmond-dept">' + escapeHtml(newspaper) + '</span>' : '') +
         '</div>' +
         '<h3 class="sausmond-card-title"><a href="' + escapeHtml(primaryLink) + '" target="_blank" rel="noopener">' + escapeHtml(title) + '</a></h3>' +
         (item.ai_summary
@@ -57,9 +68,10 @@
           '<span class="sausmond-meter-label">' + item.relevance_score + '% relevance</span>' +
         '</div>' +
         '<div class="sausmond-card-links">' +
-          '<a href="' + escapeHtml(primaryLink) + '" target="_blank" rel="noopener">' + (item.match_url ? 'View match on archive.org' : 'View on archive.org') + '</a>' +
+          '<a href="' + escapeHtml(primaryLink) + '" target="_blank" rel="noopener">' + linkLabel + '</a>' +
           (item.pdf_url ? ' &middot; <a href="' + escapeHtml(item.pdf_url) + '" target="_blank" rel="noopener">PDF</a>' : '') +
           (item.source_url ? ' &middot; <a href="' + escapeHtml(item.source_url) + '" target="_blank" rel="noopener">Original source</a>' : '') +
+          (isBna ? ' &middot; <span class="sausmond-note">subscription required at British Newspaper Archive</span>' : '') +
         '</div>' +
       '</div>';
     return el;
@@ -86,9 +98,11 @@
   function init(catalog) {
     var meta = document.getElementById("sausmond-meta");
     if (meta) {
+      var bnaHits = catalog.bna_hits || 0;
       meta.textContent = catalog.total_found + " document" + (catalog.total_found === 1 ? "" : "s") +
         " found (" + catalog.fulltext_hits + " full text match" + (catalog.fulltext_hits === 1 ? "" : "es") +
-        ", " + catalog.metadata_only_hits + " metadata match" + (catalog.metadata_only_hits === 1 ? "" : "es") + ")" +
+        ", " + catalog.metadata_only_hits + " metadata match" + (catalog.metadata_only_hits === 1 ? "" : "es") +
+        (bnaHits ? ", " + bnaHits + " paid source" + (bnaHits === 1 ? "" : "s") : "") + ")" +
         " · last updated " + catalog.generated_at.slice(0, 10);
     }
 

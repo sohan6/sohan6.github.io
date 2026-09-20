@@ -198,3 +198,75 @@ a different model's output shouldn't silently masquerade as another's.
 `sausmond.js` reads this file directly at `/assets/sausmond/catalog.json`
 — no server, no build step. Commit and push the regenerated file to
 publish new results.
+
+## `tools/bna_import.py` — British Newspaper Archive results (manual only)
+
+A **separate** script from `sausmond_catalog.py`, which it never modifies
+and never calls. It has no network code at all.
+
+**Why it's manual.** British Newspaper Archive (BNA) is a paywalled,
+session-authenticated service sitting behind active bot protection (a
+Cloudflare challenge page, confirmed by hand — even a plain HTTP request
+with a normal browser user-agent gets a "Security Check" page, not the
+search results). Automating requests against it — even just to fetch the
+free preview snippets a search already shows — would mean replaying an
+authenticated session programmatically against a wall built specifically
+to stop that. This project doesn't do that. Instead:
+
+1. You browse BNA yourself, logged into your own account, and save the
+   raw response body of each search-results page you want indexed into a
+   local file (outside the repo — `../test.json` relative to `tools/` by
+   default). It doesn't need to be valid JSON as a whole; pasting
+   multiple raw response bodies back to back with just whitespace between
+   them is fine — the script parses concatenated JSON values, not one
+   document.
+2. You run `python tools/bna_import.py` yourself, locally. It reads that
+   file and merges what it finds into `catalog.json`, without touching
+   any existing (non-BNA) item.
+3. The input file is never committed (`test.json` and `bna_export*.json`
+   are gitignored as a safety net, on top of already living outside the
+   repo by default) — only the merged `catalog.json` is.
+
+**What's stored per article**: title, newspaper name, publication place,
+publication date, and the free preview snippet BNA's own search results
+already show (no login needed to see that much — it's literally in the
+public search response). Never full article text, never an AI summary.
+Every BNA item gets `"source": "bna"` and `"requires_subscription": true`,
+which the page renders as a distinct amber "Paid source" badge plus a
+"subscription required" note instead of the usual PDF/source links.
+
+**What's deliberately *not* stored**: a thumbnail URL. The GraphQL
+response includes one (`newspaperPages[].thumbnailUri`, on BNA's own
+domain), but hotlinking it would mean embedding BNA's image assets on a
+third-party page, which is a step further than showing text you already
+have a citation for — so `thumbnail_url` is always `null` for BNA items.
+
+**No per-article deep link.** BNA's search API doesn't return a direct
+article permalink — only internal ids (`articleId`, shaped like
+`BL/0003345/19051214/044`) whose exact URL-path meaning wasn't confirmed
+from the data alone (the trailing number doesn't reliably match the
+page number in `newspaperPages`, so it likely isn't a page reference).
+Rather than guess and risk a broken or wrong link, every BNA item links
+out to the general keyword search
+(`britishnewspaperarchive.com/search-newspapers/results?keywords=sausmond`).
+If you have a confirmed article URL from your own browser, that pattern
+can replace this with real deep links.
+
+**Idempotent.** Re-running with the same input changes nothing (0 new, 0
+updated) — matched by identifier (`bna-{articleId}`), and only the
+description/title changing counts as an update. Safe to run repeatedly
+as you gather more search-result pages.
+
+**Ranking.** BNA items are appended after every archive.org-sourced item
+(full-text and metadata alike) and ranked among themselves by input
+order — a paid, unverifiable-without-login snippet is treated as weaker
+evidence than a confirmed full-text or metadata match, extending the same
+source-tiering logic `sausmond_catalog.py` already applies between its
+own two backends.
+
+```
+python tools/bna_import.py                        # reads ../test.json by default
+python tools/bna_import.py --input path/to/file.json
+python tools/bna_import.py --catalog assets/sausmond/catalog.json
+python tools/bna_import.py --terms sausmond,sansmond,sausmand
+```
