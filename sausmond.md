@@ -149,15 +149,35 @@ only remembered or assumed.
 
 <h2>The land grant</h2>
 <p class="sausmond-intro">
-Land for Sausmond was granted across several revenue villages and survey
-numbers within Varthur Hobli &mdash; Doddakanahalli, Chikkanenahalli,
-Halnayakanahalli, Chikkabellandur, Mullur, Gunjur, and Kachamanahalli.
-Kodathi village housed another colony known as Duckworth. St Anthony's Church at
-Kodathi is one of the oldesh parish churches in Bangalore. 
-Portions of Hagadur and Nallurahalli became Whitefield. 
-<span class="sausmond-note">The gazette notification recording the grant
-itself has not yet been located but other land reveneue records have been identifed.</span>
+On 27 April 1882, the Dewan's office recorded His Highness the Maharajah's
+sanction of a land grant to the Mysore Eurasian and Anglo-Indian
+Association &mdash; three blocks totalling 3,025 acres and 39 guntas,
+assessed at Rs. 3,574-8-0, offered on a sliding scale: free of assessment
+for the first two years, a quarter assessment for the third and fourth,
+half for the fifth and sixth, and full assessment from the seventh year
+on. Two of the three blocks lay in Varthur Hobli, near Kadugodi railway
+station, spanning the revenue villages of Nellurhalli, Nagondahalli,
+Hagadur, Doddakannelli, Chikkannelli, Mallur, Gunjur, Kachamanahalli,
+Halunayakanhalli, Kodati, and Chikbellandur; the third block,
+Srigandhakaval, lay separately on the Magadi road and isn't connected to
+Sausmond. Portions of Hagadur and Nellurhalli became Whitefield; Kodathi
+village housed another of the resulting colonies, known as Duckworth
+&mdash; St Anthony's Church at Kodathi is one of the oldest parish
+churches in Bangalore. Sausmond itself isn't named in this order; it
+appears to be one of the colonies later established within the Varthur
+Hobli grant, alongside Whitefield and Duckworth, as later correspondence
+in the catalog below attests.
 </p>
+
+<figure class="sausmond-figure">
+<img src="/assets/sausmond/images/Microfilm_Rollno-199_V004_0189.jpg" alt="Page 41: Proceedings of the Dewan to His Highness the Maha Raja of Mysore, Revenue, dated 27 April 1882 -- the order sanctioning the land grant to the Mysore Eurasian and Anglo-Indian Association">
+<figcaption>The order itself: <em>Proceedings of the Dewan to His Highness the Maha Raja of Mysore (Revenue), dated 27th April 1882.</em></figcaption>
+</figure>
+
+<figure class="sausmond-figure">
+<img src="/assets/sausmond/images/Microfilm_Rollno-199_V004_0190.jpg" alt="Statement of Lands applied for by the Mysore Eurasian and Anglo-Indian Association, Bangalore -- table of villages, blocks, and acreage">
+<figcaption>The accompanying statement of lands, by village and block. (<a href="https://archive.org/details/karnataka-state-archives-2026-545487/page/n189/mode/2up" target="_blank" rel="noopener">Source: Karnataka State Archives, via archive.org</a>)</figcaption>
+</figure>
 
 <h2>Title deeds traced</h2>
 <p class="sausmond-intro">
