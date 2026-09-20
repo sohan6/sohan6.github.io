@@ -197,6 +197,18 @@ three villages:
 
 <h2>From Sausmond to Carmelaram</h2>
 <p class="sausmond-intro">
+The name itself is well attested in the contemporary press. The
+<em>Madras Weekly Mail</em> explained on 20 June 1901 that "Whitefield
+was named after the late D. S. White, and Sausmond after Dr. J. Sausman,
+from the deep interest they took in Whitefield and Sausmond
+respectively." Two other papers, over a decade earlier, independently
+corroborate this: both the <em>Civil &amp; Military Gazette</em>
+(Lahore, 2 January 1888) and the <em>Homeward Mail from India, China and
+the East</em> (London, 23 January 1888) describe "Mr. Sausman" as "the
+founder of the colony." <span class="sausmond-badge sausmond-badge-bna" style="display:inline">Paid source</span>
+<span class="sausmond-note">(<a href="https://www.britishnewspaperarchive.com/search-newspapers/results?keywords=sausmond" target="_blank" rel="noopener">British Newspaper Archive</a>, subscription required &mdash; previews of all three are in the catalog below)</span>.
+</p>
+<p class="sausmond-intro">
 Several recent-year sale deeds refer to the place as "Sasmandu" &mdash;
 the Kannada rendering of Sausmond &mdash; which confirms the place name
 in the documentary record, even though it is no longer used locally.
