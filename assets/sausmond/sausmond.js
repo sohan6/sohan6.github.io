@@ -42,7 +42,7 @@
     var sourceLabel = SOURCE_LABEL[item.source] || item.source;
     var sourceClass = SOURCE_CLASS[item.source] || "sausmond-badge-metadata";
     var linkLabel = isBna
-      ? "Search on British Newspaper Archive"
+      ? (item.match_url ? "View article on British Newspaper Archive" : "Search on British Newspaper Archive")
       : (item.match_url ? "View match on archive.org" : "View on archive.org");
 
     el.innerHTML =

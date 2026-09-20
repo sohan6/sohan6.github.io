@@ -241,16 +241,27 @@ domain), but hotlinking it would mean embedding BNA's image assets on a
 third-party page, which is a step further than showing text you already
 have a citation for — so `thumbnail_url` is always `null` for BNA items.
 
-**No per-article deep link.** BNA's search API doesn't return a direct
-article permalink — only internal ids (`articleId`, shaped like
-`BL/0003345/19051214/044`) whose exact URL-path meaning wasn't confirmed
-from the data alone (the trailing number doesn't reliably match the
-page number in `newspaperPages`, so it likely isn't a page reference).
-Rather than guess and risk a broken or wrong link, every BNA item links
-out to the general keyword search
-(`britishnewspaperarchive.com/search-newspapers/results?keywords=sausmond`).
-If you have a confirmed article URL from your own browser, that pattern
-can replace this with real deep links.
+**Per-article deep links.** BNA's search API doesn't return a direct
+permalink, only internal ids (`articleId`, shaped like
+`BL/0003193/18921203/027`) — but `build_viewer_url()` constructs the
+real article URL from it, confirmed against two actual URLs pasted from
+a browser rather than guessed:
+
+```
+https://www.britishnewspaperarchive.com/image-viewer?issue=BL%2F0003193%2F18921203&page=2&article=027&stringtohighlight=sausmond
+```
+
+`issue` is `articleId`'s first three segments (`BL/0003193/18921203`),
+`article` is the last (`027`), and — this is the part that isn't
+guessable from `articleId` alone — `page` is the *separate*
+`newspaperPages[0].pageNumber` field (confirmed `2` for both example
+URLs; the trailing `articleId` segment is an article index within the
+issue, not a page number, and the two numbers can differ). If an
+article's data doesn't fit that shape (missing `newspaperPages`, or
+`articleId` with an unexpected number of segments), it falls back to the
+general keyword search
+(`britishnewspaperarchive.com/search-newspapers/results?keywords=sausmond`)
+rather than emit a link that might be wrong.
 
 **Idempotent.** Re-running with the same input changes nothing (0 new, 0
 updated) — matched by identifier (`bna-{articleId}`), and only the

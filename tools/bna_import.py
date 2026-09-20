@@ -36,11 +36,12 @@ you page through results. This script parses them as a stream of
 concatenated JSON values (json.JSONDecoder.raw_decode in a loop), not as
 one JSON document.
 
-Note: BNA's search API doesn't return a direct per-article permalink
-(only internal ids whose exact URL-path meaning wasn't confirmed), so
-each item links out to the general keyword search rather than a guessed
-article URL. If you have a real article URL from your browser, share it
-and this can be upgraded to precise deep links.
+Each item links straight to its matching page in BNA's viewer
+(`/image-viewer?issue=...&page=...&article=...&stringtohighlight=...`),
+built from `articleId` and `newspaperPages[0].pageNumber` per
+build_viewer_url() — confirmed against two real article URLs, not
+guessed. Falls back to a generic keyword-search link only when an
+article's data doesn't fit that shape.
 
 Usage:
     python tools/bna_import.py                       # reads the default --input path
@@ -53,6 +54,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import urllib.parse
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -121,12 +123,40 @@ def find_matches(text: str, terms: list[str]) -> list[str]:
     return [t for t in terms if t.lower() in lowered]
 
 
+def build_viewer_url(article: dict, matched_terms: list[str]) -> str | None:
+    """Constructs a deep link straight to the matching page, e.g.
+    https://www.britishnewspaperarchive.com/image-viewer?issue=BL%2F0003193%2F18921203&page=2&article=027&stringtohighlight=sausmond
+
+    Confirmed against two real article URLs (not guessed): articleId
+    ("BL/0003193/18921203/027") splits into `issue` (its first three
+    segments) and `article` (the last); `page` is newspaperPages[0]'s
+    plain (unpadded) pageNumber, which is a *different* number from the
+    article segment -- they are not interchangeable. Returns None (never
+    a wrong link) if the shape doesn't match what was confirmed."""
+    article_id = article.get("articleId") or ""
+    parts = article_id.split("/")
+    if len(parts) != 4:
+        return None
+    pages = article.get("newspaperPages") or []
+    page_number = pages[0].get("pageNumber") if pages else None
+    if page_number is None:
+        return None
+    params = {
+        "issue": "/".join(parts[:3]),
+        "page": str(page_number),
+        "article": parts[3],
+        "stringtohighlight": matched_terms[0] if matched_terms else "sausmond",
+    }
+    return "https://www.britishnewspaperarchive.com/image-viewer?" + urllib.parse.urlencode(params)
+
+
 def article_to_item(article: dict, terms: list[str]) -> dict:
     article_id = article.get("articleId") or article.get("id")
     title = article.get("title") or "Untitled article"
     snippet = clean_bna_snippet(article.get("textSnippet"))
     issue = article.get("newspaperIssue") or {}
     date = issue.get("publicationDate")
+    matched_terms = find_matches(f"{title} {snippet}", terms)
 
     return {
         "rank": None,             # filled in by merge_items()
@@ -137,17 +167,17 @@ def article_to_item(article: dict, terms: list[str]) -> dict:
         "date": date,
         "date_is_exact": bool(date),
         "description": snippet,
-        "matched_terms": find_matches(f"{title} {snippet}", terms),
+        "matched_terms": matched_terms,
         "newspaper_name": issue.get("title"),
         "publication_place": issue.get("publicationPlace"),
         "requires_subscription": True,
         "department": None, "document_belongs": None, "file_no": None, "classification": None,
         "language": [], "collection": [],
         "source_url": None,
-        # No confirmed per-article URL pattern -- link to the keyword
-        # search itself rather than guess and risk a broken deep link.
+        # Generic fallback link (always valid); match_url below carries
+        # the precise deep link when the data supports constructing one.
         "archive_url": f"{BNA_SEARCH_URL}?keywords=sausmond",
-        "match_url": None,
+        "match_url": build_viewer_url(article, matched_terms),
         "pdf_url": None,
         # Deliberately never populated: even though the response includes
         # a thumbnailUri, hotlinking BNA's images onto a third-party page
@@ -167,7 +197,7 @@ def merge_items(catalog: dict, new_bna_items: dict[str, dict]) -> tuple[dict, in
     for identifier, new_item in new_bna_items.items():
         old = by_id.get(identifier)
         if old is not None:
-            changed = old.get("description") != new_item["description"] or old.get("title") != new_item["title"]
+            changed = any(old.get(k) != new_item[k] for k in ("description", "title", "match_url"))
             old.update({k: v for k, v in new_item.items() if k not in ("rank", "relevance_score")})
             updated += 1 if changed else 0
         else:
