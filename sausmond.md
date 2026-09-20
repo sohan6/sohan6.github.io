@@ -151,11 +151,12 @@ only remembered or assumed.
 <p class="sausmond-intro">
 Land for Sausmond was granted across several revenue villages and survey
 numbers within Varthur Hobli &mdash; Doddakanahalli, Chikkanenahalli,
-Halnayakanahalli, Chikkabellandur, Mullur, Gunjur, and Kachamanahalli, as
-far as can currently be traced.
+Halnayakanahalli, Chikkabellandur, Mullur, Gunjur, and Kachamanahalli.
+Kodathi village housed another colony known as Duckworth. St Anthony's Church at
+Kodathi is one of the oldesh parish churches in Bangalore. 
+Portions of Hagadur and Nallurahalli became Whitefield. 
 <span class="sausmond-note">The gazette notification recording the grant
-itself has not yet been located, so this list should be treated as
-provisional.</span>
+itself has not yet been located but other land reveneue records have been identifed.</span>
 </p>
 
 <h2>Title deeds traced</h2>
