@@ -195,7 +195,7 @@ three villages:
 <li>Chikkabellandur</li>
 </ul>
 
-<h2>From Sausmond to Carmelaram</h2>
+<h2>Etymology</h2>
 <p class="sausmond-intro">
 The name itself is well attested in the contemporary press. The
 <em>Madras Weekly Mail</em> explained on 20 June 1901 that "Whitefield
@@ -212,10 +212,6 @@ founder of the colony." <span class="sausmond-badge sausmond-badge-bna" style="d
 Several recent-year sale deeds refer to the place as "Sasmandu" &mdash;
 the Kannada rendering of Sausmond &mdash; which confirms the place name
 in the documentary record, even though it is no longer used locally.
-Today the area is known as Carmelaram, named for Our Lady of Mount Carmel
-after friars of the OCD (Discalced Carmelite) order purchased large
-tracts of land here and divided them among various congregations &mdash;
-likely renaming the area sometime in the 1960s or '70s.
 </p>
 
 <figure class="sausmond-figure">
